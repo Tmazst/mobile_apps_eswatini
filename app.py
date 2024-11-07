@@ -36,6 +36,8 @@ app.config["UPLOADED"] = 'static/uploads'
 # Initialise App with DB 
 db.init_app(app)
 
+application = app
+
 #Login Manager
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
