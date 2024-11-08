@@ -60,7 +60,7 @@ class App_Info(db.Model):
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(255))
     app_category = db.Column(db.String(255))
-    platform = db.Column(db.String(20), nullable=False)
+    platform = db.Column(db.String(20), nullable=False,default="Android")
     version_number = db.Column(db.String(20))
     playstore_link = db.Column(db.String(100),nullable=False)
     ios_link = db.Column(db.String(100))
