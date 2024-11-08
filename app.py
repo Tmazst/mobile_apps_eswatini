@@ -16,9 +16,12 @@ from image_processor import ImageProcessor
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 import itsdangerous
 import random
+import json
 # import sqlite3
 # import pymysql
 # import pyodbc
+
+import mysql.connector
 
 
 
@@ -42,6 +45,10 @@ application = app
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+if os.path.exists('client.json'):
+    # Load secrets from JSON file
+    with open('client.json') as f:
+        creds = json.load(f)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -495,10 +502,10 @@ def search_in_table():
 
     # Database connection parameters
     db_config = {
-        'user': 'root',
-        'password': 'tmazst41',
+        'user': creds['user'],
+        'password': creds['db_pass'],
         'host': 'localhost',  # or your MySQL server address
-        'database': 'eswatini_apps_db'
+        'database': 'techtlnf_apps_eswatini'
     }
 
     conn = mysql.connector.connect(**db_config)
