@@ -398,14 +398,14 @@ def app_form_edit(token=None):
     app_form_update = App_Info_Form()
     # if request.args.get('id'): se
     app_id = request.args.get('id')
-    app_name = request.args.get('nm')
+    code = request.args.get('apc')
 
     if token:
         id_obj = App_Access_Credits.query.filter_by(token=token).first()
         id_ = id_obj.id
     elif app_id:
-        id_obj = App_Access_Credits.query.filter_by(name=app_name,id=app_id).first()
-        id_ = id_obj.id
+        # id_obj = App_Info.query.filter_by(name=app_name,id=app_id).first().id
+        id_ =App_Info.query.filter_by(app_code=int(code),id=int(app_id)).first().id
 
     app_info =App_Info.query.get(id_)
 
