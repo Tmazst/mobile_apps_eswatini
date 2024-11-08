@@ -523,11 +523,11 @@ def search_in_table():
     # Convert the results to a list of dictionaries (depending on your needs)
     apps = [{'id': row[0], 'cid': row[1], 'name': row[2], 'description': row[3], 'app_category': row[4], 
              'platform': row[5], 'version_number': row[6], 'playstore_link': row[7], 'ios_link': row[8],'uptodown_link': row[9],
-               'facebook_link': row[10], 'whatsapp_link': row[11], 'x_link': row[12],'linkedin_link': row[13], 'youtube_link': row[14], 'web_link': row[15],
-            'github_link': row[16], 'app_icon': row[17], 'publish': row[18],'approved': row[19], 'timestamp': row[20], 'company_name': row[21],
-            'company_contact': row[22],'company_email': row[23],} for row in rows]
+             'huawei_link': row[10], 'apkpure_link': row[11], 'galaxy_link': row[12],'microsoft_link': row[13], 'amazon_link': row[14], 
+               'facebook_link': row[15], 'whatsapp_link': row[16], 'x_link': row[17],'linkedin_link': row[18], 'youtube_link': row[19], 'web_link': row[20],
+            'github_link': row[21], 'app_icon': row[22], "app_code":row[23],'publish': row[24],'approved': row[25], 'timestamp': row[26], 'company_name': row[27],
+            'company_contact': row[28],'company_email': row[29],} for row in rows]
 
-    # Close the cursor and connection
     cursor.close()
     conn.close()
 
