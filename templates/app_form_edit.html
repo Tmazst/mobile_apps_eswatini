@@ -290,6 +290,60 @@
             {% endif %}
         </div>
 
+        <!-------Company Name--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.company_name.label(class="labels")}}
+            {% if app_info.company_name is not none %}
+                {{ app_form_update.company_name(class="form-control adj-width-60",value=app_info.company_name)}}<br>
+            {%else%}
+                {{ app_form_update.company_name(class="form-control adj-width-60",placeholder="Company Name")}}<br>
+            {%endif%}
+            
+            {% if app_form_update.company_name.errors %}
+            {% for error in app_form_update.company_name.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Company Contacts--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.company_contact.label(class="labels")}}
+            {% if app_info.company_contact is not none %}
+                {{ app_form_update.company_contact(class="form-control adj-width-60",value=app_info.company_contact)}}<br>
+            {%else%}
+                {{ app_form_update.company_contact(class="form-control adj-width-60",placeholder="Company Contact")}}<br>
+            {%endif%}
+            
+            {% if app_form_update.company_contact.errors %}
+            {% for error in app_form_update.company_contact.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Company Email--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.company_email.label(class="labels")}}
+            {% if app_info.company_email is not none %}
+                {{ app_form_update.company_email(class="form-control adj-width-60",value=app_info.company_email)}}<br>
+            {%else%}
+                {{ app_form_update.company_email(class="form-control adj-width-60",placeholder="Company email")}}<br>
+            {%endif%}
+            
+            {% if app_form_update.company_email.errors %}
+            {% for error in app_form_update.company_email.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Company Email--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.publish.label(class="labels")}}
+            {{ app_form_update.publish(style="width:100px",class="form-control adj-width-60")}}<br>
+        </div>
+
 
         <div>
             {{ app_form_update.submit(class="btns", value="Update") }}

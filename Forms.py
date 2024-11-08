@@ -103,8 +103,9 @@ class App_Info_Form(FlaskForm):
     web_link=URLField("Company Web Link")
     github_link = StringField('GitHub Link')
     app_icon = FileField('App Icon*')
+    publish=BooleanField("Publish App",default=True)
     company_name = StringField('Company Name*', validators=[DataRequired()])
-    company_contact = StringField('Contacts*', validators=[DataRequired()])
+    company_contact = StringField('Contacts', validators=[Optional()])
     company_email = StringField('Email*', validators=[DataRequired()])
     submit=SubmitField('submit')
 

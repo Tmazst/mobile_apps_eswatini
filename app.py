@@ -440,6 +440,14 @@ def app_form_edit(token=None):
             app_info.huawei_link = app_form_update.huawei_link.data
         if app_form_update.apkpure_link.data:
             app_info.apkpure = app_form_update.apkpure_link.data
+        if app_form_update.company_name.data:
+            app_info.company_name = app_form_update.company_name.data
+        if app_form_update.company_contact.data:
+            app_info.company_contact = app_form_update.company_contact.data
+        if app_form_update.company_email.data:
+            app_info.company_email = app_form_update.company_email.data
+            
+        app_info.publish = app_form_update.publish.data
 
         if app_form_update.app_icon.data:
             print("Check if there is data:",app_form_update.app_icon.data )
