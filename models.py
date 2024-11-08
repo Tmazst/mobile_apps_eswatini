@@ -54,7 +54,8 @@ class company_user(User):
 class App_Info(db.Model):
 
     __tablename__ = "app_info"
-
+    #Note: Add new lines from the end and update search results route
+    
     id = db.Column(db.Integer,primary_key=True)
     cid = db.Column(db.Integer,ForeignKey("user.id"))
     name = db.Column(db.String(50), nullable=False)

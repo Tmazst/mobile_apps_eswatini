@@ -128,7 +128,7 @@ def send_email(app_info):
         app.config["MAIL_USE_TLS"] = True
         # Creditentials saved in environmental variables
         em = app.config["MAIL_USERNAME"] ='pro.dignitron@gmail.com' # os.getenv("MAIL")  creds.get('email')
-        pwd = app.config["MAIL_PASSWORD"] = os.getenv("PWD")  #creds.get('gpass')
+        pwd = app.config["MAIL_PASSWORD"] = creds.get('gpass')  # os.getenv("PWD")
         app.config["MAIL_DEFAULT_SENDER"] = "noreply@gmail.com"
 
         mail = Mail(app)
@@ -394,17 +394,23 @@ def app_form():
 
 @app.route("/app_form_edit", methods=['POST','GET'])
 def app_form_edit(token=None):
-
+    id_=None
     app_form_update = App_Info_Form()
     # if request.args.get('id'): se
-    # r.loads(request.args.get('id')).get('data')
-    id_obj = App_Access_Credits.query.filter_by(token=token).first()
+    app_id = request.args.get('id')
+    app_name = request.args.get('nm')
 
-    app_info =App_Info.query.get(1)
+    if token:
+        id_obj = App_Access_Credits.query.filter_by(token=token).first()
+        id_ = id_obj.id
+    elif app_id:
+        id_obj = App_Access_Credits.query.filter_by(name=app_name,id=app_id).first()
+        id_ = id_obj.id
+
+    app_info =App_Info.query.get(id_)
 
     if not app_info:
         return jsonify({"Error":"Looks like something went with the URL Request, Please request a new link"})
-
 
     if request.method == "POST" and app_info:
         if app_form_update.name.data:
