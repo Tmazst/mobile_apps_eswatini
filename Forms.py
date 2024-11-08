@@ -38,7 +38,7 @@ class App_Info_Form(FlaskForm):
     name = StringField('App Name*', validators=[DataRequired()])
     description = TextAreaField('App Description*', validators=[DataRequired()])
     app_category = SelectField('App Category*',choices=[
-        ("Communications & Media", "Communication & Media"),
+        ("Communications & Media", "Communications & Media"),
         ("Finance", "Finance"),
         ("Health", "Health"),
         ("Educational", "Educational"),
@@ -55,6 +55,7 @@ class App_Info_Form(FlaskForm):
         ("Betting & Casino", "Betting & Casino"),
         ("News", "News"),
         ("Music", "Music"),
+        ("Shopping", "Shopping"),
         ("Online Shopping", "Online Shopping"),
         ("Productivity", "Productivity"),
         ("Social Media", "Social Media"),
@@ -62,7 +63,7 @@ class App_Info_Form(FlaskForm):
         ("Games", "Games")
     ], validators=[DataRequired()])
     app_category_ed = SelectField('App Category',choices=[
-        ("Communications & Media", "Communication & Media"),
+        ("Communications & Media", "Communications & Media"),
         ("Finance", "Finance"),
         ("Health", "Health"),
         ("Educational", "Educational"),
@@ -79,6 +80,7 @@ class App_Info_Form(FlaskForm):
         ("Betting & Casino", "Betting & Casino"),
         ("News", "News"),
         ("Music", "Music"),
+        ("Shopping", "Shopping"),
         ("Online Shopping", "Online Shopping"),
         ("Productivity", "Productivity"),
         ("Social Media", "Social Media"),
