@@ -64,16 +64,7 @@
                 {% endif %}
             </div>
 
-            <!-------Platform--------->
-            <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
-                {{ app_form.platform.label(class="labels")}}
-                {{ app_form.platform( style="list-style-type:none", class="adj-width-60", placeholder="platform")}}
-                {% if app_form.platform.errors %}
-                {% for error in app_form.platform.errors %}
-                    <span class="span-error" >*{{error}}</span>
-                {% endfor %}
-                {% endif %}
-            </div><br>
+
 
             <!-------version_number--------->
             <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
@@ -120,6 +111,27 @@
                 {% endif %}
             </div>
 
+            <!-------Huawei Store--------->
+            <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                {{ app_form.huawei_link.label(class="labels")}}
+                {{ app_form.huawei_link( class="form-control adj-width-60", placeholder="Huawei Link")}}
+                {% if app_form.huawei_link.errors %}
+                {% for error in app_form.huawei_link.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-------Apk Pure Store--------->
+            <div style="background-color: f8f95a;" class="job-ad-group marginise-bottom">
+                {{ app_form.apkpure_link.label(class="labels")}}
+                {{ app_form.apkpure_link( class="form-control adj-width-60", placeholder="APK Pure Link")}}
+                {% if app_form.apkpure_link.errors %}
+                {% for error in app_form.apkpure_link.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
 
             <!-------web_link--------->
             <div class="job-ad-group marginise-bottom">

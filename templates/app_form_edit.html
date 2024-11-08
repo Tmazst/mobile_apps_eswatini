@@ -44,7 +44,7 @@
         <div class="job-ad-group marginise-bottom">
             {{ app_form_update.app_category_ed.label(class="labels")}}
             {% if app_info.app_category %}
-                {{ app_form_update.app_category_ed(style="list-style-type:none",class="adj-width-60",value=app_info.app_category)}}<br>
+                {{ app_form_update.app_category_ed(class="form-control adj-width-60",value=app_info.app_category)}}<br>
             {%else%}
                 {{ app_form_update.app_category_ed(class="form-control adj-width-60",placeholder="app_categorys")}}<br>
             {%endif%}
@@ -64,7 +64,7 @@
             {{ app_form_update.description.label(class="labels")}}<br>
             {% if app_info.description %}
                 <textarea style="height:70px" class="form-control" name="description">
-                    {{app_info.description}}
+                    {{app_info.description.strip()}}
                 </textarea>
                 <br>
             {%else%}
@@ -72,21 +72,7 @@
             {%endif%}
         </div>
 
-        <!-------Platforms--------->
-        <div class="job-ad-group marginise-bottom">
-            {{ app_form_update.platform_ed.label(class="labels")}}
-            {% if app_info.platform %}
-                {{ app_form_update.platform_ed(style="list-style-type:none",class="adj-width-60",value=app_info.platform)}}<br>
-            {%else%}
-                {{ app_form_update.platform_ed(class="form-control adj-width-60",placeholder="Platforms")}}<br>
-            {%endif%}
-            
-            {% if app_form_update.platform.errors %}
-            {% for error in app_form_update.platform.errors %}
-                <span class="span-error" >*{{error}}</span>
-            {% endfor %}
-            {% endif %}
-        </div>
+     
 
         <!-------version_number--------->
         <div class="job-ad-group marginise-bottom">
@@ -150,6 +136,38 @@
             
             {% if app_form_update.uptodown_link.errors %}
             {% for error in app_form_update.uptodown_link.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Huawei Link--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.huawei_link.label(class="labels")}}
+            {% if app_info.platform %}
+                {{ app_form_update.huawei_link(class="form-control adj-width-60",value=app_info.huawei_link)}}<br>
+            {%else%}
+                {{ app_form_update.huawei_link(class="form-control adj-width-60",placeholder="Huawei Link")}}<br>
+            {%endif%}
+            
+            {% if app_form_update.huawei_link.errors %}
+            {% for error in app_form_update.huawei_link.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------ApkPure Link--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.apkpure_link.label(class="labels")}}
+            {% if app_info.platform %}
+                {{ app_form_update.apkpure_link(class="form-control adj-width-60",value=app_info.apkpure_link)}}<br>
+            {%else%}
+                {{ app_form_update.apkpure_link(class="form-control adj-width-60",placeholder="APK Pure Link")}}<br>
+            {%endif%}
+            
+            {% if app_form_update.apkpure_link.errors %}
+            {% for error in app_form_update.apkpure_link.errors %}
                 <span class="span-error" >*{{error}}</span>
             {% endfor %}
             {% endif %}

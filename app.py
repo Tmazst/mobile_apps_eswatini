@@ -72,7 +72,7 @@ def process_file(file):
             return 'No selected file'
 
         if file.filename:
-            file_saved = file.save(os.path.join(app.root_path, 'static\images', new_file_name))
+            file_saved = file.save(os.path.join("static/images",new_file_name))
             flash(f"File Upload Successful!!", "success")
             return new_file_name
 
@@ -363,14 +363,14 @@ def app_form():
 
     if request.method == "POST" :#and app_form.validate_on_submit()
         appinfo = App_Info(
-            name = app_form.name.data,description = app_form.description.data,platform = app_form.name.data,
+            name = app_form.name.data,description = app_form.description.data,
             version_number = app_form.version_number.data,playstore_link = app_form.playstore_link.data,
             facebook_link = app_form.facebook_link.data,whatsapp_link = app_form.whatsapp_link.data,
             x_link = app_form.x_link.data,linkedin_link = app_form.linkedin_link.data,
             youtube_link = app_form.youtube_link.data, web_link=app_form.web_link.data,
             github_link = app_form.github_link.data,company_name = app_form.company_name.data,company_contact = app_form.company_contact.data
             ,company_email = app_form.company_email.data,ios_link = app_form.ios_link.data,uptodown_link = app_form.uptodown_link.data,
-            app_category = app_form.app_category.data,timestamp=datetime.now(),app_code=random.randint(1000,9999)
+            app_category = app_form.app_category.data,timestamp=datetime.now(),app_code=random.randint(1000,9999),huawei_link = app_form.huawei_link.data,apkpure_link=app_form.apkpure_link.data
         )
 
         # img = process_file(app_form.app_icon.data)
@@ -385,14 +385,15 @@ def app_form():
     return render_template("app_form.html",app_form=app_form)
 
 
-@app.route("/app_form_edit/<token>", methods=['POST','GET'])
-def app_form_edit(token):
+@app.route("/app_form_edit", methods=['POST','GET'])
+def app_form_edit(token=None):
 
     app_form_update = App_Info_Form()
     # if request.args.get('id'): se
     # r.loads(request.args.get('id')).get('data')
     id_obj = App_Access_Credits.query.filter_by(token=token).first()
-    app_info =App_Info.query.get(id_obj.app_id)
+
+    app_info =App_Info.query.get(1)
 
     if not app_info:
         return jsonify({"Error":"Looks like something went with the URL Request, Please request a new link"})
@@ -401,9 +402,8 @@ def app_form_edit(token):
     if request.method == "POST" and app_info:
         if app_form_update.name.data:
             app_info.name = app_form_update.name.data
-        app_info.description = request.form.get("description")
-        if app_form_update.platform_ed.data:
-            app_info.platform = app_form_update.platform_ed.data
+        if request.form.get("description"):
+            app_info.description = request.form.get("description").strip()
         if app_form_update.version_number.data:
             app_info.version_number = app_form_update.version_number.data
         if app_form_update.app_category_ed.data:
@@ -423,6 +423,10 @@ def app_form_edit(token):
             app_info.web_link=app_form_update.web_link.data
         if app_form_update.github_link.data:
             app_info.github_link = app_form_update.github_link.data
+        if app_form_update.huawei_link.data:
+            app_info.huawei_link = app_form_update.huawei_link.data
+        if app_form_update.apkpure_link.data:
+            app_info.apkpure = app_form_update.apkpure_link.data
 
         if app_form_update.app_icon.data:
             print("Check if there is data:",app_form_update.app_icon.data )

@@ -180,6 +180,14 @@ html{box-sizing:border-box}*;*:before;*:after{//box-sizing:inherit}
     height:55px !important;
 }
 
+.general-flex-icons{
+    display:none;
+    justify-content:space-around;
+    align-items:space-around;
+    gap:10px;
+    flex-wrap:wrap;
+    transition: all 0.3s ease;
+}
 
 .general-flex{
     display:flex;
@@ -449,6 +457,8 @@ section{
     border-radius:7px;
     padding:30px;
 }
+
+.links-icons{display: none !important;}
 
 
 .hyper-links{
@@ -1091,6 +1101,19 @@ img{
     /* font-weight:bold; */
     border-radius:20px;
     border:1px solid coral;
+    font-size: 16px;
+    background: none;
+    min-width:70px;  
+    text-align: center;
+}
+
+.btns-inverted{
+    /* height:20px; */
+    padding:10px;
+    color:rgb(153, 153, 153);
+    /* font-weight:bold; */
+    border-radius:20px;
+    border:1px solid rgb(153, 153, 153);
     font-size: 16px;
     background: none;
     min-width:70px;  
@@ -1752,12 +1775,16 @@ to{
 
 .icon-imgs{
     transition: all 0.3s ease;
-    height: 30px;
-
+    height: 40px !important;
 }
 
 .icon-imgs:hover{
-    transform:scale(1.5)
+    transform:scale(1.2)
+}
+
+.reveal-icons{
+    display: flex;
+    transition: all 0.3s ease;
 }
 
 .show-nav{
@@ -1765,7 +1792,6 @@ to{
 }
 
 .selling-content-img{
-    //background-image: url('static/images/bg_services.png');
     background-size: cover; /* Adjusts the background size */
     background-position: center;
     height:600px;

@@ -63,8 +63,13 @@ class App_Info(db.Model):
     platform = db.Column(db.String(20), nullable=False)
     version_number = db.Column(db.String(20))
     playstore_link = db.Column(db.String(100),nullable=False)
-    ios_link = db.Column(db.String(100),nullable=False)#
-    uptodown_link = db.Column(db.String(100),nullable=False)#
+    ios_link = db.Column(db.String(100))
+    uptodown_link = db.Column(db.String(100))
+    huawei_link = db.Column(db.String(100))#
+    apkpure_link = db.Column(db.String(100))
+    galaxy_link = db.Column(db.String(100))
+    microsoft_link = db.Column(db.String(100))
+    amazon_link = db.Column(db.String(100))
     facebook_link = db.Column(db.String(100))
     whatsapp_link = db.Column(db.String(100))
     x_link = db.Column(db.String(100))
