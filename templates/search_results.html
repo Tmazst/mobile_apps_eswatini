@@ -51,6 +51,7 @@
         {% for app in apps %}
             <div style="background-color: #f7f7f7;border-radius: 15px;padding-right: 15px;" class="app-list">
                 <div onclick="popAppItem('{{app.id}}')" style="height:65px;width:65px;min-width:65px;overflow: hidden;border-radius: 10px;border: 1px solid rgb(235, 232, 232);">
+                    <h1>{{app.app_icon}}</h1>
                     <img style="height:inherit;border-radius:10px" src="static/images/{{app.app_icon}}" /></div>
                 <div onclick="popAppItem('{{app.id}}')" style="min-width: 200px;"  class="item-as-btn c-name">
                     <span   style="text-wrap: nowrap;color:#00a550">{{app.name}}</span>
