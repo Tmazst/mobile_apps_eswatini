@@ -82,8 +82,8 @@ def process_file(file):
 
 
 #Database Tables Updates
-def createall(db_):
-    db_.create_all()
+def createall(db):
+    db.create_all()
 
 #Password Encryption
 encrypt_password = Bcrypt()
