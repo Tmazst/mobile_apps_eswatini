@@ -100,6 +100,7 @@ def inject_ser():
 @app.route("/", methods=['POST','GET'])
 def home():
     layout = None
+    db.create_all()
     apps = App_Info.query.all()
 
     categories= {app.app_category for app in apps}
