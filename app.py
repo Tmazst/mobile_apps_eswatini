@@ -54,7 +54,7 @@ if os.path.exists('client.json'):
 def load_user(user_id):
     return User.query.get(user_id)
 
-# Process image files, covert text, save in db and server 
+
 
 def process_file(file):
         global img_checker
