@@ -2182,7 +2182,7 @@ to{
     display:flex;
     justify-content: center;
     flex-direction: column;
-    width:70% !important;
+    width:80% !important;
     gap:10px;
     margin:10px auto;
     align-items: center;
@@ -2198,6 +2198,10 @@ to{
     /* background-color:var(--coral-varient); */
     gap:10px;
   }
+
+.list-view{
+    width: 100%;
+}
 
 .flash-messages{
     width:90%;

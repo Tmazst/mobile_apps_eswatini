@@ -49,78 +49,84 @@
         <!-----DEMOs-->
         <div id="layout-list " style="background-color:;flex-direction: column !important;" class="layout_ls_cont" >
         {% for app in apps %}
-            <div style="background-color: #f7f7f7;border-radius: 15px;padding-right: 15px;" class="app-list">
-                <div onclick="popAppItem('{{app.id}}')" style="height:65px;width:65px;min-width:65px;overflow: hidden;border-radius: 10px;border: 1px solid rgb(235, 232, 232);">
-                    
-                    <img style="height:inherit;border-radius:10px" src="static/images/{{app.app_icon}}" /></div>
-                <div onclick="popAppItem('{{app.id}}')" style="min-width: 200px;"  class="item-as-btn c-name">
-                    <span   style="text-wrap: nowrap;color:#00a550">{{app.name}}</span>
-                    <div id='app-description' class="description" style="font-weight: 400;text-align: left;" >
-                        {{app.description|truncate(length=52, end='...') }}
-                    </div> 
-                </div>
-                <div class="reactions-container">
-                    <div class="pre-react">
-                        {% if app.web_link %}
-                            <a class="" style="" href="{{app.web_link}}"><img class="icon-imgs" src="static/icons/globe.png" /></a>
-                        {% endif %}
-                        {% if not app.facebook %}
-                        <a class="" style="" href="#"><img class="icon-imgs" src="static/icons/facebook-icon.png" /></a>
-                        {% endif %}
+        <div id="" style="display: flex;flex-direction: column;background-color: ;margin:10px auto" class="list-view" >
+            {% for category in categories %}
+            <h3 style="" class="cat-subtitle">{{category}}</h3>
+            {% for app in apps %}
+                {%if app.app_category == category %}
+            
+                <div style="background-color: #f7f7f7;border-radius: 15px;padding-right:;" class="app-list">
+                    <div onclick="popAppItem('{{app.id}}')" style="height:65px;width:65px;min-width:65px;overflow: hidden;border-radius: 10px;border: 1px solid rgb(235, 232, 232);">
+                        <img style="height:inherit;border-radius:10px" src="static/images/{{app.app_icon}}" /></div>
+                    <div onclick="popAppItem('{{app.id}}')" style="min-width: 150px;"  class="item-as-btn c-name">
+                        <span   style="text-wrap: nowrap;color:#00a550">{{app.name}}</span>
+                        <div id='app-description' class="description" style="font-weight: 400;text-align: left;" >
+                            {{app.description|truncate(length=48, end='...more') }}
+                        </div> 
                     </div>
+                    <div class="reactions-container">
+                        <div class="pre-react">
+                            {% if app.web_link %}
+                                <a class="" style="height:" href="{{app.web_link}}"><img class="icon-links" src="static/icons/globe.png" /></a>
+                            {% endif %}
+                            {% if not app.facebook %}
+                                <a class="" style="" href="#"><img class="icon-links" src="static/icons/facebook-icon.png" /></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div style="background-color:;height: 1px;flex-grow:1;width:80px" class=""></div>
+    
                 </div>
-                <div style="background-color:;height: 1px;flex-grow:1;width:80px" class=""></div>
-                <div onclick="popAppItem()" class="links">
-                    <div onclick="popAppItem('{{app.id}}')" style=""><img class="icon-imgs" src="static/icons/download-icon.png" /></div>
-                </div>
-            </div>
-          
-
-           <!-- Popup  -->
-           <div onclick="closeAppPop('{{app.id}}')" id="pop_appcont_{{app.id}}" class="pop-cont">
-            <div style="height:auto;width:auto;top:100px;background: none;padding:0;" id="popup_app_{{app.id}}" class="pop-up">
-                <div style="background-color: rgb(196, 195, 195);"  class="app-container">
-                    <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
-                    <div class="app-name">{{app.name}}</div>
-                    {% if app.web_link %}
-                        <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
-                    {% else %}
-                        <div class="owner-name"><span>{{app.company_name}}</span></div>
-                    {% endif %}
-                    <div style="color:rgb(44, 44, 44)" class="description">{{app.description}}</div>
-
-                    <div class="labels">Download</div>
-                <div style="height:;" class="links general-flex">
-                    <a style="height:inherit"  href="{{app.playstore_link}}">
-                        <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
-                    </a> 
-                    {% if app.ios_link %}
-                    <a style="height:inherit"  href="{{app.ios_link}}">
-                        <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
-                    </a> 
-                    {% endif %}
-                    <div style="background-color:;" class="general-flex">
-                        {% if app.uptodown_link %}
-                        <a style="" href="{{app.uptodown_link}}">
-                            <img style="height:;" class="icon-imgs" src="static/icons/UpToDown.png" />
+    
+               <!-- Popup  -->
+               <div onclick="closeAppPop('{{app.id}}')" id="pop_appcont_{{app.id}}" class="pop-cont">
+                <div style="height:auto;width:auto;top:100px;background: none;padding:0;" id="popup_app_{{app.id}}" class="pop-up">
+                    <div style="background-color: rgb(196, 195, 195);"  class="app-container">
+                        <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
+                        <div class="app-name">{{app.name}}</div>
+                        {% if app.web_link %}
+                            <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
+                        {% else %}
+                            <div class="owner-name"><span>{{app.company_name}}</span></div>
+                        {% endif %}
+                        <div style="color:rgb(44, 44, 44)" class="description">{{app.description}}</div>
+    
+                        <div class="labels">Download</div>
+                    <div style="height:;" class="links general-flex">
+                        <a style="height:inherit"  href="{{app.playstore_link}}">
+                            <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
+                        </a> 
+                        {% if app.ios_link %}
+                        <a style="height:inherit"  href="{{app.ios_link}}">
+                            <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
                         </a> 
                         {% endif %}
-                        {% if app.huawei_link %}
-                        <a style="" href="{{app.huawei_link}}">
-                            <img style="height:;" class="icon-imgs" src="static/icons/huawei-icon.png" />
-                        </a>
-                        {% endif %}
-                        {% if app.apkpure_link %}
-                        <a style="" href="{{app.apkpure_link}}">
-                            <img style="height:;" class="icon-imgs" src="static/icons/apkpure-icon.png" />
-                        </a>
-                        {% endif %}
+                        <div style="background-color:;" class="general-flex">
+                            {% if app.uptodown_link %}
+                            <a style="" href="{{app.uptodown_link}}">
+                                <img style="height:;" class="icon-imgs" src="static/icons/UpToDown.png" />
+                            </a> 
+                            {% endif %}
+                            {% if app.huawei_link %}
+                            <a style="" href="{{app.huawei_link}}">
+                                <img style="height:;" class="icon-imgs" src="static/icons/huawei-icon.png" />
+                            </a>
+                            {% endif %}
+                            {% if app.apkpure_link %}
+                            <a style="" href="{{app.apkpure_link}}">
+                                <img style="height:;" class="icon-imgs" src="static/icons/apkpure-icon.png" />
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div><br>
+                    <a style="height:inherit"  href="{{app.playstore_link}}">
+                        <div class="btns">explore</div></a>
                     </div>
-                </div><br>
-                <a style="height:inherit"  href="{{app.playstore_link}}">
-                    <div class="btns">explore</div></a>
                 </div>
             </div>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
         </div>
         {% endfor %}
     </div>
