@@ -1999,7 +1999,7 @@ to{
 
 .cat-subtitle{
     color:rgb(78, 78, 78);font-weight:400;text-align: left;
-    min-width:400px;
+    min-width:400px;background-color:;
 }
 
 .pop-cont{
@@ -2182,11 +2182,22 @@ to{
     display:flex;
     justify-content: center;
     flex-direction: column;
-    /* width:60%; */
+    width:70% !important;
     gap:10px;
     margin:10px auto;
+    align-items: center;
     /* padding:20px; */
 }
+
+.layout_ls_cont{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    flex-wrap: wrap;
+    align-items:center;
+    /* background-color:var(--coral-varient); */
+    gap:10px;
+  }
 
 .flash-messages{
     width:90%;
@@ -2236,10 +2247,7 @@ to{
 
 }
 
-.container{
-    width:95% !important;
-    /* background-color: red; */
-    }
+
 
 .other-nav{
 
