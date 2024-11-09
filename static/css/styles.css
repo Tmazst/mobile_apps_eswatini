@@ -1876,10 +1876,9 @@ to{
 .text-center-div{
         position:absolute;
         width:100%;
-        //background-color:#24788f;
+        /* background-color:#24788f; */
         top:400px;
 }
-
 
 .account{
     background-color:#ccc;
@@ -1892,6 +1891,12 @@ to{
 
 .other-nav-item{
     list-style-type: none;
+}
+
+.sidenav-list{
+    display: flex;
+    flex-direction: column;
+    gap:7px;
 }
 
 #side-navig-cont{

@@ -119,6 +119,12 @@ def home():
     return render_template("index.html", apps=apps, layout=layout, categories=categories)
 
 
+@app.route("/about", methods=['POST','GET'])
+def about():
+
+
+    return render_template("about.html")
+
 def send_email(app_info):
     
     def send_veri_mail():
@@ -265,7 +271,7 @@ def send_email(app_info):
                     <!-- Sub Topic  -->
                     <h2 style="color:coral">Key Objects of the Project</h2>
                     <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/tick-icon.png" /></span>
-                        <span style="" class="bolden">Increased Awareness:</span><span >Our goal is to promote awareness among EmaSwatini about diverse mobile applications, encouraging user engagement with these essential digital solutions.
+                        <span style="" class="bolden">Increased Awareness:</span><span >Our goal is to promote awareness among EmaSwati about diverse mobile applications, encouraging user engagement with these essential digital solutions.
                         </span></p>
                     <p><span><img style="height:20px" src="https://techxolutions.com/images/tick-icon.png" /></span>
                         <span class="bolden">Centralized Hub:</span> <span>Users will have streamlined access to a variety of apps, making it easy for them to locate the resources they need.
