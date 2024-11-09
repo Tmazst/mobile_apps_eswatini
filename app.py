@@ -397,15 +397,16 @@ def app_form_edit(token=None):
     id_=None
     app_form_update = App_Info_Form()
     # if request.args.get('id'): se
-    app_id = request.args.get('id')
-    code = request.args.get('apc')
+
+    app_name = request.args.get('name')
+    code = ser.loads(request.args.get('apc')).get('data ')
 
     if token:
         id_obj = App_Access_Credits.query.filter_by(token=token).first()
         id_ = id_obj.id
-    elif app_id:
+    elif code:
         # id_obj = App_Info.query.filter_by(name=app_name,id=app_id).first().id
-        id_ =App_Info.query.filter_by(app_code=int(code),id=int(app_id)).first().id
+        id_ =App_Info.query.filter_by(app_code=int(code),name=app_name.title()).first().id
 
     app_info =App_Info.query.get(id_)
 
@@ -446,7 +447,7 @@ def app_form_edit(token=None):
             app_info.company_contact = app_form_update.company_contact.data
         if app_form_update.company_email.data:
             app_info.company_email = app_form_update.company_email.data
-            
+
         app_info.publish = app_form_update.publish.data
 
         if app_form_update.app_icon.data:

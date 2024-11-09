@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TextAreaField,BooleanField, SelectField,DateField, URLField,RadioField
+from wtforms import StringField,PasswordField,SubmitField, TextAreaField,BooleanField, SelectField,DateField, URLField,RadioField,IntegerField
 from wtforms.validators import DataRequired,Length,Email, EqualTo, ValidationError,Optional
 from flask_login import current_user
 from flask_wtf.file import FileField , FileAllowed
@@ -113,6 +113,13 @@ class App_Info_Form(FlaskForm):
 class SendEmailForm(FlaskForm):
 
     app_name = StringField('App Name', validators=[Length(max=120)])
+    submit = SubmitField('submit')
+
+
+class EditAppInfoForm(FlaskForm):
+
+    app_name = StringField('App Name', validators=[Length(max=120)])
+    app_code = IntegerField('App Code(Check It on Your Email)', validators=[Length(max=120)])
     submit = SubmitField('submit')
 
 
