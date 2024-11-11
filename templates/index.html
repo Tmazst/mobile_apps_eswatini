@@ -117,11 +117,12 @@
                 <div onclick="popAppItem('{{app.id}}')" style="height:65px;width:65px;min-width:65px;overflow: hidden;border-radius: 10px;border: 1px solid rgb(235, 232, 232);">
                     <img style="height:inherit;border-radius:10px" src="static/images/{{app.app_icon}}" /></div>
                 <div onclick="popAppItem('{{app.id}}')" style="min-width: 150px;"  class="item-as-btn c-name">
-                    <span   style="text-wrap: nowrap;color:#00a550">{{app.name}}</span>
+                    <span   style="text-wrap: nowrap;color:#00a550">{{app.name|truncate(length=22, end='...')}}</span>
                     <div id='app-description' class="description" style="font-weight: 400;text-align: left;" >
                         {{app.description|truncate(length=48, end='...more') }}
                     </div> 
                 </div>
+                <div style="background-color:;height: 1px;flex-grow:1;width:80px" class=""></div>
                 <div class="reactions-container">
                     <div class="pre-react">
                         {% if app.web_link %}
@@ -132,7 +133,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div style="background-color:;height: 1px;flex-grow:1;width:80px" class=""></div>
+                
 
             </div>
 
