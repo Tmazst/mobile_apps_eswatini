@@ -231,10 +231,10 @@ def send_email(app_info):
                 <div>
                     <section style="flex-wrap: nowrap;" class="container">
 
-                        <table style="width:250px;margin: 0 auto;width: 200px;min-height: 200px;border: 1px solid grey;border-radius: 25px;padding: 25px;background-color: #fff;overflow: hidden; " class="app-container">
+                        <table style="width:250px;margin: 0 auto;min-height: 200px;border: 1px solid grey;border-radius: 25px;padding: 25px;background-color: #fff;overflow: hidden; " class="app-container">
                             <tr>
                                 <td style="text-align: center; " class="app-cell">
-                                    <div class="icon-cont"><img style="border-radius: 15px;" src="https://techxolutions.com/images/c533d624ae4de51b.png"/></div>
+                                    <div class="icon-cont"><img style="border-radius: 15px;" src="https://techxolutions.com/images/{app_info.app_icon}"/></div>
                                 </td>
                             </tr>
                             <tr>
