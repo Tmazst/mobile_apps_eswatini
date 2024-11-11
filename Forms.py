@@ -43,6 +43,8 @@ class App_Info_Form(FlaskForm):
         ("Travel & Entertainment", "Travel & Entertainment"),
         ("Lifestyle", "Lifestyle"),
         ("Media", "Media"),
+        ("Food", "Food"),
+        ("Fast Food", "Fast Food"),
         ("Techonology", "Techonology"),
         ("Training & Skills", "Training & Skills"),
         ("Faith", "Faith"),
