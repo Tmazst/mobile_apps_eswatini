@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="static/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>{{title}}</title>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="logo">
-      <img style="height: inherit;" src="static/images/logo.png" />
+      <img style="height: inherit;" src="{{ url_for('static', filename='images/logo.png') }}" />
     </div>
 
     <!-- <nav class="nav">
@@ -60,11 +60,11 @@
 
         
 
-        <div style="background-color:" class="user">
+        <div style="background-color:;" class="user">
             <div class="user-label">
-              <div><img style="" class="icon-imgs" src="static/icons/facebook-icon.png" /></div>
-              <div><img style="" class="icon-imgs" src="static/icons/instagram-icon.png" /></div>
-              <div><img style="" class="icon-imgs" src="static/icons/linkedin-icon.png" /></div>
+              <div><img style="" class="icon-imgs" src="{{ url_for('static', filename='icons/facebook-icon.png') }}" /></div>
+              <div><img style="" class="icon-imgs" src="{{ url_for('static', filename='icons/instagram-icon.png') }}" /></div>
+              <div><img style="" class="icon-imgs" src="{{ url_for('static', filename='icons/linkedin-icon.png') }}" /></div>
             </div>
         </div>
   </div>
@@ -80,7 +80,7 @@
               <a class="nav-link" href="/app_form">Publish App</a>
             </li>
             <li class="other-nav-item">
-              <a class="nav-link" href="#">Apps Reviews</a>
+              <a class="nav-link" href="/edit_app">My App</a>
             </li>
             <li class="other-nav-item">
               <a class="nav-link" href="/about" >About</a>

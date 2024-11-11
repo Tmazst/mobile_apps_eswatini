@@ -25,17 +25,17 @@
             <small></small>
         </div>
         
-        <form style="background-color: ;width:100%;"  _lpchecked="1" action="" method="get" enctype="multipart/form-data">
+        <form style="background-color: ;width:100%;"  _lpchecked="1" action="" method="post" enctype="">
             <br>
 
-                {{ email_form.hidden_tag() }}
+                {{ edit_app.hidden_tag() }}
                 
             <!-------App Name--------->
             <div class="job-ad-group marginise-bottom">
-                {{ email_form.app_name.label(class="labels")}}<br>
-                {{ email_form.app_name(style="width:300px",class="form-control adj-width-60",placeholder="App Name")}}
-                {% if email_form.app_name.errors %}
-                {% for error in email_form.app_name.errors %}
+                {{ edit_app.app_name.label(class="labels")}}<br>
+                {{ edit_app.app_name(style="width:300px",class="form-control adj-width-60",placeholder="App Name")}}
+                {% if edit_app.app_name.errors %}
+                {% for error in edit_app.app_name.errors %}
                     <span class="span-error" >*{{error}}</span>
                 {% endfor %}
                 {% endif %}
@@ -43,18 +43,18 @@
 
             <!-------App Code--------->
             <div class="job-ad-group marginise-bottom">
-                {{ email_form.app_code.label(class="labels")}}<br>
-                {{ email_form.app_code(style="width:300px",class="form-control adj-width-60",placeholder="App code")}}
-                {% if email_form.app_code.errors %}
-                {% for error in email_form.app_code.errors %}
+                {{ edit_app.app_code.label(class="labels")}}<br>
+                {{ edit_app.app_code(style="width:300px",class="form-control adj-width-60",placeholder="App code")}}
+                {% if edit_app.app_code.errors %}
+                {% for error in edit_app.app_code.errors %}
                     <span class="span-error" >*{{error}}</span>
                 {% endfor %}
                 {% endif %}
             </div>
 
             <div>
-                <!-- {{ email_form.submit(class="btns") }} -->
-                <a href="/app_form_edit?nm={{email_form.app_name.data}}&apc={{ser.dumps('data':email_form.app_code.data)}}"><div class="bts">Sumbit</div></a>
+                {{ edit_app.submit(class="btns") }}
+                
             </div>
 
         </form>

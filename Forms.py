@@ -119,7 +119,7 @@ class SendEmailForm(FlaskForm):
 class EditAppInfoForm(FlaskForm):
 
     app_name = StringField('App Name', validators=[Length(max=120)])
-    app_code = IntegerField('App Code(Check It on Your Email)', validators=[Length(max=120)])
+    app_code = IntegerField('App Code(Check it in Your Email)', validators=[Length(max=120)])
     submit = SubmitField('submit')
 
 
