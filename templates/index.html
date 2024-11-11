@@ -61,7 +61,7 @@
                 {% else %}
                     <div class="owner-name"><span>{{app.company_name}}</span></div>
                 {% endif %}
-                <div class="description">{{app.description}}</div>
+                <div class="description">{{app.description|truncate(length=150, end='.....') }}</div>
                 <!-- <img class="icon-imgs" src="static/icons/download-icon.png" /> -->
                 <div class="labels">Download</div>
                 <div style="height:;" class="links general-flex">
