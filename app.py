@@ -224,56 +224,13 @@ def send_email(app_info):
                     This platform serve as a repository where users can easily discover and explore mobile applications 
                     that cater to their service requirements. 
                 </div>
-                <p class="bolden">Below is the prototype of how your app looks like as it is featured on our platform.</p>
-                <p style="font-weight:600;font-size:13px">Note:<span style="font-weight:400">App Name, Description, Icon, and Links are sourced from Google Play Store.</span></p>
                 
-                <!--- APP INFO ---->
-                <div>
-                    <section style="flex-wrap: nowrap;" class="container">
-
-                        <table style="width:250px;margin: 0 auto;min-height: 200px;border: 1px solid grey;border-radius: 25px;padding: 25px;background-color: #fff;overflow: hidden; " class="app-container">
-                            <tr>
-                                <td style="text-align: center; " class="app-cell">
-                                    <div class="icon-cont"><img style="border-radius: 15px;" src="https://techxolutions.com/images/{app_info.app_icon}"/></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; " class="app-cell">
-                                   <div style="margin: 0 auto;width:max-content;font-weight: 500;font-size:23px;"> {app_info.name}</div>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td style="text-align: center; " style="background-color:;" class="app-cell">
-                                    <div style="margin: 0 auto;width:max-content"><a href="{app_info.web_link}">
-                                    <div class="owner-name"><img style="transition: all 0.3s ease;height: 30px;" class="icon-imgs" src="https://techxolutions.com/images/globe.png" />
-                                    <span style="vertical-align:middle">{app_info.company_name}</span></div></a></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; " class="app-cell">
-                                    <div style="font-size:12px;color:#606060;text-align: center;" class="description">{app_info.description}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; " class="app-cell">
-                                    <div class="links">
-                                        <div style="margin: 0 auto;width:max-content"><a style="" href="{app_info.playstore_link}">
-                                            <img style="transition: all 0.3s ease;height: 30px;" class="icon-imgs" src="http://techxolutions.com/icons/download-icon.png" /></div>
-                                        </a> 
-                                    </div>
-                                    <div style="width:100px;width:max-content;margin:0 auto;padding:10px;color:coral;border-radius:20px;border:1px solid coral;font-size: 16px;background: none;min-width:70px;  
-                text-align: center;" class="btns">explore</div>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </section>
-                </div>
+                
+        
 
 
                 <!-- Link  -->
-                <div style="margin:20px auto;width:max-content"><span>Visit TechConnect Plus:</span><a href="https://eswatiniapps.techxolutions.com"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>
+                <div style="margin:20px auto;width:max-content"><span>Please Visit TechConnect Plus here:</span><a href="https://eswatiniapps.techxolutions.com"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>
                 <br><br>
                 <div style="width:60%;margin:10px auto" class="content objectives">
                     <!-- Sub Topic  -->
@@ -299,7 +256,7 @@ def send_email(app_info):
                     <span style="" class="bolden">Category:</span><span >{app_info.app_category}</span></p>
                 </div>
                 <div>
-                <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/" /></span>
+                <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/tick-icon.png" /></span>
                     <span style="" class="bolden">Description:</span><span >{app_info.description}</span></p>
                 </div>
                 <div>
@@ -310,6 +267,7 @@ def send_email(app_info):
                 <div style="margin:20px auto;width:"><span>Edit App Details Here:</span><a style="text-decoration:none" href="{url_for('app_form_edit', token=token, _external=True)}">
                 <span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">App Info</span></a></div>
                 <!-- Footer / Email Signature -->
+                <p style="font-weight:600;font-size:13px">Note:<span style="font-weight:400">App Name, Description, Icon, and Links are sourced from Google Play Store.</span></p>
                 </div><br><br>
 
 
