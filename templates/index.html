@@ -142,9 +142,9 @@
             <div style="height:auto;width:auto;top:100px;background: none;padding:0;" id="popup_app_{{app.id}}" class="pop-up">
                 <div style="background-color: rgb(196, 195, 195);"  class="app-container">
                     <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
-                    <div class="app-name">{{app.name}}</div>
+                    <div style="white-space: wrap;" class="app-name">{{app.name}}</div>
                     {% if app.web_link %}
-                        <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
+                        <a href="{{app.web_link}}"><div style="white-space: wrap;" class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
                     {% else %}
                         <div class="owner-name"><span>{{app.company_name}}</span></div>
                     {% endif %}
