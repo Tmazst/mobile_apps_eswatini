@@ -259,7 +259,7 @@ def send_email(app_info):
                                 <td style="text-align: center; " class="app-cell">
                                     <div class="links">
                                         <div style="margin: 0 auto;width:max-content"><a style="" href="{app_info.playstore_link}">
-                                            <img style="transition: all 0.3s ease;height: 30px;" class="icon-imgs" src="http://techxolutions.com/images/download-icon.png" /></div>
+                                            <img style="transition: all 0.3s ease;height: 30px;" class="icon-imgs" src="http://techxolutions.com/icons/googlePlayBadge.svg" /></div>
                                         </a> 
                                     </div>
                                     <div style="width:100px;width:max-content;margin:0 auto;padding:10px;color:coral;border-radius:20px;border:1px solid coral;font-size: 16px;background: none;min-width:70px;  
@@ -299,11 +299,11 @@ def send_email(app_info):
                     <span style="" class="bolden">Category:</span><span >{app_info.app_category}</span></p>
                 </div>
                 <div>
-                <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/tick-icon.png" /></span>
+                <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/" /></span>
                     <span style="" class="bolden">Description:</span><span >{app_info.description}</span></p>
                 </div>
                 <div>
-                <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/googlePlayBadge.svg" /></span>
+                <p style="vertical-align: top;"><span><img style="height:20px" src="https://techxolutions.com/images/tick-icon.png" /></span>
                     <span style="" class="bolden">Google PlayStore Link:</span><span >{app_info.playstore_link}</span></p>
                     </div><br>
                 <!-- Link  -->
@@ -440,7 +440,7 @@ def app_form_editor(app_name=None,code=None):
     app_form_update = App_Info_Form()
 
     if request.method == "GET" and request.args.get("code"):
-        app_info=App_Info.query.filter_by(app_code=ser.loads(request.args.get("code")).get('data'),name=request.args.get("app_name").title()).first()
+        app_info=App_Info.query.filter_by(app_code=ser.loads(request.args.get("code")).get('data'),name=request.args.get("app_name")).first()
 
     if not app_info:
         return jsonify({"Error":"Looks like something went wrong with the URL request, Please request a new link"})
