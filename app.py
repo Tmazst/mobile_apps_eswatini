@@ -439,7 +439,7 @@ class Save_Values:
 
 @app.route("/app_form_editor", methods=['POST','GET'])
 def app_form_editor(app_name=None,code=None):
-    app_info=None
+    # app_info=None
     app_form_update = App_Info_Form()
 
     if request.method == "GET" and request.args.get("code"):
@@ -447,6 +447,7 @@ def app_form_editor(app_name=None,code=None):
         Save_Values.app_obj=app_info
 
     if not app_info:
+        print("Check VAlues: ",Save_Values.app_obj.name)
         return jsonify({"Error":"Looks like something went wrong with the URL request, Please request a new link"})
 
     if request.method == "POST" and Save_Values.app_obj:
