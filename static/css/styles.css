@@ -965,6 +965,13 @@ label span{
     background:none;
 }
 
+
+#view-cont{
+    flex-wrap: wrap;
+    width:100% !important;
+}
+
+
 #view-cont::-webkit-scrollbar-thumb {
     background-color: rgba(212, 212, 212,0.2);
     border-radius: 10px;
@@ -1016,9 +1023,10 @@ label span{
    
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap:10px;
     align-items:center ;
-    width:max-content;
+    width:100%;
 }
 
 .scroll-btn:hover {
@@ -2187,6 +2195,7 @@ to{
     display:flex;
     justify-content: center;
     flex-direction: column;
+    flex-wrap: nowrap;
     width:80% !important;
     gap:10px;
     margin:10px auto;
@@ -2238,6 +2247,7 @@ to{
     display: flex;
     width:100% !important;
     flex-direction: column !important;
+    
     /* background-color: #bc0f9f; */
 }
 

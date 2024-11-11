@@ -49,10 +49,8 @@
 
 <section style="flex-wrap: nowrap;background-color: " class="container">
 {% if layout == "blockview" or not layout %}
-    {% if apps | length > 4 %}
-        <button class="scroll-btn" id="scroll-left" style="position: ; top: 150px; left: 30px; transform: translateX(-50%);"></button>
-    {% endif %}
-    <div id="view-cont" style="width:1500px; overflow: auto;background-color:;">
+
+    <div id="view-cont" style="width:; overflow: auto;background-color:;">
         <div class="scroll-container" style="background-color: rgb(255, 254, 254);">
             {% for app in apps %}
             <div class="app-container">
@@ -105,9 +103,7 @@
             {% endfor %}
         </div> 
     </div>
-    {% if apps | length > 4 %}
-        <button class="scroll-btn" id="scroll-right" style="position:; top: 150px; right:10px; transform: translateX(-50%);"></button>
-    {% endif %}
+
 
 {% elif layout == "listview"  %}
         <!-----DEMOs---->
