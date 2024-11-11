@@ -55,7 +55,7 @@
             {% for app in apps %}
             <div class="app-container">
                 <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
-                <div class="app-name">{{app.name|truncate(length=20, end='...')}}</div>
+                <div class="app-name">{{app.name.strip()|truncate(length=20, end='...')}}</div>
                 {% if app.web_link %}
                     <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name |truncate(length=25, end='...')}}</span></div></a>
                 {% else %}

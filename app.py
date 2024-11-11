@@ -340,9 +340,9 @@ def app_form():
 
     app_form = App_Info_Form()
 
-    if request.method == "POST" :#and app_form.validate_on_submit()
+    if request.method == "POST":#and app_form.validate_on_submit()
         appinfo = App_Info(
-            name = app_form.name.data,description = app_form.description.data,
+            name = app_form.name.data.strip(),description = app_form.description.data.strip(),
             version_number = app_form.version_number.data,playstore_link = app_form.playstore_link.data,
             facebook_link = app_form.facebook_link.data,whatsapp_link = app_form.whatsapp_link.data,
             x_link = app_form.x_link.data,linkedin_link = app_form.linkedin_link.data,
