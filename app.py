@@ -228,10 +228,9 @@ def send_email(app_info):
                 
         
 
-
                 <!-- Link  -->
                 <div style="margin:20px auto;width:max-content"><span>Please Visit TechConnect Plus here:</span><a href="https://eswatiniapps.techxolutions.com"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>
-                <br><br>
+                <br>
                 <div style="width:60%;margin:10px auto" class="content objectives">
                     <!-- Sub Topic  -->
                     <h2 style="color:coral">Key Objects of the Project</h2>
