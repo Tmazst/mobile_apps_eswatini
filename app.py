@@ -446,8 +446,8 @@ def app_form_editor(app_name=None,code=None):
         app_info=App_Info.query.filter_by(app_code=ser.loads(request.args.get("code")).get('data'),name=request.args.get("app_name")).first()
         Save_Values.app_obj=app_info
 
-    if not app_info:
-        print("Check VAlues: ",Save_Values.app_obj.name)
+    if not Save_Values.app_obj:
+        # print("Check VAlues: ",Save_Values.app_obj.name)
         return jsonify({"Error":"Looks like something went wrong with the URL request, Please request a new link"})
 
     if request.method == "POST" and Save_Values.app_obj:
