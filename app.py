@@ -433,6 +433,9 @@ def edit_app():
 
     return render_template("edit_app.html",edit_app=edit_app)
 
+class Save_Values:
+    app_obj=None
+
 
 @app.route("/app_form_editor", methods=['POST','GET'])
 def app_form_editor(app_name=None,code=None):
@@ -441,11 +444,13 @@ def app_form_editor(app_name=None,code=None):
 
     if request.method == "GET" and request.args.get("code"):
         app_info=App_Info.query.filter_by(app_code=ser.loads(request.args.get("code")).get('data'),name=request.args.get("app_name")).first()
+        Save_Values.app_obj=app_info
 
     if not app_info:
         return jsonify({"Error":"Looks like something went wrong with the URL request, Please request a new link"})
 
-    if request.method == "POST" and app_info:
+    if request.method == "POST" and Save_Values.app_obj:
+        app_info = Save_Values.app_obj
         if app_form_update.name.data:
             app_info.name = app_form_update.name.data
         if request.form.get("description"):
