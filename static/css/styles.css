@@ -1156,13 +1156,27 @@ a{
     text-align: center;
 }
 
+.owner-name:hover::after {
+    content: attr(title);
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* white-space: nowrap; */
+    z-index: 1;
+}
+
 .owner-name{
     font-weight:500;
     font-size:14px;
     color:#134f72;
     display: flex;
     align-items: center;
-    word-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .description{
