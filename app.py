@@ -259,7 +259,7 @@ def send_email(app_info):
                                 <td style="text-align: center; " class="app-cell">
                                     <div class="links">
                                         <div style="margin: 0 auto;width:max-content"><a style="" href="{app_info.playstore_link}">
-                                            <img style="transition: all 0.3s ease;height: 30px;" class="icon-imgs" src="http://techxolutions.com/icons/googlePlayBadge.svg" /></div>
+                                            <img style="transition: all 0.3s ease;height: 30px;" class="icon-imgs" src="http://techxolutions.com/icons/download-icon.png" /></div>
                                         </a> 
                                     </div>
                                     <div style="width:100px;width:max-content;margin:0 auto;padding:10px;color:coral;border-radius:20px;border:1px solid coral;font-size: 16px;background: none;min-width:70px;  
@@ -494,6 +494,8 @@ def app_form_editor(app_name=None,code=None):
 
         db.session.commit()
         flash("Update Successful","success")
+        return redirect(url_for("home"))
+        
 
     return render_template("app_form_edit.html",app_form_update=app_form_update,app_info=app_info)
 
