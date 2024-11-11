@@ -29,9 +29,6 @@ class Register(FlaskForm):
 
 
 
-class company_user(FlaskForm):
-    pass
-
 
 class App_Info_Form(FlaskForm):
 
@@ -157,7 +154,6 @@ class Reset(FlaskForm):
 class Reset_Request(FlaskForm):
 
     email = StringField('email', validators=[DataRequired(), Email()])
-
     reset = SubmitField('Submit')
 
     # def validate_email(self,email):

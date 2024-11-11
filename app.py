@@ -28,7 +28,7 @@ import mysql.connector
 #Change App
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "sdsdjfe832j2rj_32j"
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///eswatiniapps_db.db"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///eswatiniapps_db.db"
 # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:tmazst41@localhost/eswatini_apps_db" #?driver=MySQL+ODBC+8.0+Driver"
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://techtlnf_tmaz:!Tmazst41#@localhost/techtlnf_apps_eswatini"
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle':280}
@@ -447,7 +447,7 @@ def app_form_editor(app_name=None,code=None):
         Save_Values.app_obj=app_info
 
     if not Save_Values.app_obj:
-        # print("Check VAlues: ",Save_Values.app_obj.name)
+        print("Check VAlues: ",app_info=App_Info.query.filter_by(app_code=ser.loads(request.args.get("code")).get('data'),name=request.args.get("app_name")).first().name)
         return jsonify({"Error":"Looks like something went wrong with the URL request, Please request a new link"})
 
     if request.method == "POST" and Save_Values.app_obj:
