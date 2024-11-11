@@ -1158,10 +1158,11 @@ a{
 
 .owner-name{
     font-weight:500;
-    font-size:16px;
+    font-size:14px;
     color:#134f72;
     display: flex;
     align-items: center;
+    word-wrap: nowrap;
 }
 
 .description{
