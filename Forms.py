@@ -106,6 +106,7 @@ class App_Info_Form(FlaskForm):
     company_name = StringField('Company Name*', validators=[DataRequired()])
     company_contact = StringField('Contacts', validators=[Optional()])
     company_email = StringField('Email*', validators=[DataRequired()])
+    edited_by=StringField('Edited by',validators=[DataRequired()])
     submit=SubmitField('submit')
 
 

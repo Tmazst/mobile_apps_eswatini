@@ -324,7 +324,7 @@
 
         <!-------Company Email--------->
         <div class="job-ad-group marginise-bottom">
-            {{ app_form_update.company_email.label(class="labels")}}
+            {{ app_form_update.edited_by.label(class="labels")}}
             {% if app_info.company_email is not none %}
                 {{ app_form_update.company_email(class="form-control adj-width-60",value=app_info.company_email)}}<br>
             {%else%}
@@ -338,7 +338,24 @@
             {% endif %}
         </div>
 
-        <!-------Company Email--------->
+        <!-------Edited By--------->
+        <div class="job-ad-group marginise-bottom">
+            {{ app_form_update.edited_by.label(class="labels")}}
+            {% if app_info.edited_by is not none %}
+                {{ app_form_update.edited_by(class="form-control adj-width-60",value=app_info.edited_by)}}<br>
+            {%else%}
+                {{ app_form_update.edited_by(class="form-control adj-width-60",placeholder="e.g Sipho Soko, Communications")}}<br>
+            {%endif%}
+            <label style="font-size:13px;font-weight:600">Last Edit by: {{app_info.edited_by}}  {{app_info.edited.strftime("%d %b %y  %HH:%MM")}}</label>
+            {% if app_form_update.edited_by.errors %}
+            {% for error in app_form_update.edited_by.errors %}
+                <span class="span-error" >*{{error}}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-------Unpublish--------->
+        <label style="font-size:13px;font-weight:600;color:rgb(124, 124, 124)">Should You Consider to unpublish your app, un-tick below.</label>
         <div class="job-ad-group marginise-bottom">
             {{ app_form_update.publish.label(class="labels")}}
             {{ app_form_update.publish(style="width:100px",class="form-control adj-width-60")}}<br>

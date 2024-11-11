@@ -441,11 +441,14 @@ def app_form_editor(app_name=None,code=None):
             app_info.company_contact = app_form_update.company_contact.data
         if app_form_update.company_email.data:
             app_info.company_email = app_form_update.company_email.data
+        if app_form_update.edited_by.data:
+            app_info.edited_by=app_form_update.edited_by.data
 
         app_info.publish = app_form_update.publish.data
+        app_info.edited = datetime.now()
 
         if app_form_update.app_icon.data:
-            print("Check if there is data:",app_form_update.app_icon.data )
+            # print("Check if there is data:",app_form_update.app_icon.data )
             img_update = app_form_update.app_icon.data
             app_info.app_icon = process_file(img_update)
 
