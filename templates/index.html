@@ -53,6 +53,7 @@
     <div id="view-cont" style="width:; overflow: auto;background-color:;">
         <div class="scroll-container" style="background-color: rgb(255, 254, 254);">
             {% for app in apps %}
+            {% if not app.publish %}
             <div class="app-container">
                 <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
                 <div class="app-name">{{app.name.strip()|truncate(length=20, end='...')}}</div>
@@ -99,7 +100,7 @@
                 <a href='{{app.playstore_link}}'><div class="btns">explore</div></a>
                 {%endif%}
             </div>
-
+            {% endif %}
             {% endfor %}
         </div> 
     </div>
@@ -111,7 +112,7 @@
         {% for category in categories %}
         <h3 style="" class="cat-subtitle">{{category}}</h3>
         {% for app in apps %}
-            {%if app.app_category == category %}
+            {%if app.app_category == category and not app.publish %}
         
             <div style="background-color: #f7f7f7;border-radius: 15px;padding-right:;" class="app-list">
                 <div onclick="popAppItem('{{app.id}}')" style="height:65px;width:65px;min-width:65px;overflow: hidden;border-radius: 10px;border: 1px solid rgb(235, 232, 232);">
