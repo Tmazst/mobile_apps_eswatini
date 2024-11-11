@@ -86,6 +86,7 @@ class App_Info(db.Model):
     company_name = db.Column(db.String(100))
     company_contact = db.Column(db.String(100))
     company_email = db.Column(db.String(100))
+    edited=db.Column(db.DateTime)
     edited_by=db.Column(db.String(100))
     access=relationship("App_Access_Credits",backref="App_Info",lazy=True)
 
