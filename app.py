@@ -500,7 +500,7 @@ def app_form_edit(token):
     print("DEBUG EMAIL TOKEN LINK: ",token)
     if token:
         id_obj = App_Access_Credits.query.filter_by(token=token).first()
-        id_ = id_obj.id
+        id_ = id_obj.app_id
 
     app_info =App_Info.query.get(id_)
 
