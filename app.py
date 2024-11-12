@@ -127,7 +127,7 @@ def about():
 
     return render_template("about.html")
 
-def send_email(app_info):
+def send_email(app_info,emails=None):
     
     def send_veri_mail():
 
@@ -155,7 +155,7 @@ def send_email(app_info):
         except IntegrityError:
             db.session.rollback()
         
-        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["thabo@techxolutions.com","bhillaceby@gmail.com"])
+        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["thabo@techxolutions.com",emails])
 
         msg.html = f"""<html> 
 <head>
@@ -331,11 +331,12 @@ def email():
 
         if app_name:
             app_name_rq = App_Info.query.filter_by(name=app_name).first()
+            emails = email_form.emails.data
 
         if app_name_rq:
-            send_email(app_name_rq)
+            send_email(app_name_rq,emails)
         else:
-            return jsonify({"Error":f"App Name {app_name_rq} Does Not Exists in the System"})
+            return jsonify({"Error":f"App Name {app_name} Does Not Exists in the System"})
 
     return render_template("send_email.html",email_form=email_form)
 

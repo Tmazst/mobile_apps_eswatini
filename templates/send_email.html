@@ -30,12 +30,23 @@
 
             {{ email_form.hidden_tag() }}
                 
-            <!-------Company Email--------->
+            <!-------App Name--------->
             <div class="job-ad-group marginise-bottom">
                 {{ email_form.app_name.label(class="labels")}}<br>
                 {{ email_form.app_name(style="width:300px",class="form-control adj-width-60",placeholder="App Name")}}
                 {% if email_form.app_name.errors %}
                 {% for error in email_form.app_name.errors %}
+                    <span class="span-error" >*{{error}}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="job-ad-group marginise-bottom">
+                {{ email_form.emails.label(class="labels")}}<br>
+                {{ email_form.emails(style="width:300px",class="form-control adj-width-60",placeholder="Emails")}}
+                {% if email_form.emails.errors %}
+                {% for error in email_form.emails.errors %}
                     <span class="span-error" >*{{error}}</span>
                 {% endfor %}
                 {% endif %}
