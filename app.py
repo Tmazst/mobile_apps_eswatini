@@ -155,7 +155,7 @@ def send_email(app_info):
         except IntegrityError:
             db.session.rollback()
         
-        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["pro.dignitron@gmail.com","thabo@techxolutions.com",app_info.company_email])
+        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["thabo@techxolutions.com","bhillacebi@gmail.com"])
 
         msg.html = f"""<html> 
 <head>
@@ -222,7 +222,7 @@ def send_email(app_info):
                     the visibility and accessibility of mobile applications developed in Eswatini, with a focus on better service delivery for EmaSwati.
                 </div><br>
 
-                <div style="color:rgb(53, 53, 53)" class="content"> We believe that your app {app_info.name} significantly contributes to the needs of Eswatini
+                <div style="color:rgb(53, 53, 53)" class="content"> We believe that your app <span class="bolden"> {app_info.name} </span>significantly contributes to the needs of Eswatini
                     community and would like to feature it prominently on our centralized platform. Many Mobile Apps developed locally take some time to get recognition across the whole community of EmaSwati.
     
                     This platform serve as a repository where users can easily discover and explore mobile applications 
@@ -239,7 +239,8 @@ def send_email(app_info):
                         <span style="" class="bolden">Increased Awareness:</span><span >Our goal is to promote awareness among EmaSwati about diverse mobile applications, encouraging user engagement with these essential digital solutions.
                         </span></p>
                     <p><span><img style="height:20px" src="https://techxolutions.com/images/tick-icon.png" /></span>
-                        <span class="bolden">Centralized Hub:</span> <span>Users will have streamlined access to a variety of apps, making it easy for them to locate the resources they need.
+                        <span class="bolden">Centralized Hub:</span> <span>Users will have streamlined access to a variety of apps, making it easy for them to locate the resources they need.<br>
+                        <span style="color:blue"><a href="{url_for('about',  _external=True)}"> ...read more</a></span>
                     </span></p><br><br>
                 <!-- Sub Topic  -->
                 <h2 style="color:coral">App Verification Details</h2>
@@ -268,7 +269,9 @@ def send_email(app_info):
                 <span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">App Info</span></a></div>
                 <!-- Footer / Email Signature -->
                 <p style="font-weight:600;font-size:13px">Note:<span style="font-weight:400">App Name, Description, Icon, and Links are sourced from Google Play Store.</span></p>
-                <p style="font-weight:500;font-size:13px"><span style="font-weight:400">Publising Your App with TechConnectPlus is Free of Charge</span></p>
+                <p style="font-weight:500;font-size:13px"><span style="font-weight:400"><span style="color:blue"><a href="{url_for('app_form',  _external=True)}"> Publising </a></span> Your App with TechConnectPlus is Free of Charge</span></p>
+                <p style="font-weight:500;font-size:13px"><span style="font-weight:400"><span style="color:blue">App Access Code in TechConnect+: </span> {app_info.app_code}</span></p>
+                
                 </div><br><br>
 
 
