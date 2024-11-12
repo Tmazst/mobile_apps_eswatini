@@ -155,7 +155,7 @@ def send_email(app_info):
         except IntegrityError:
             db.session.rollback()
         
-        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["pro.dignitron@gmail.com","thabo@techxolutions.com","siphesihlendwandwe334@gmail.com"])
+        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["pro.dignitron@gmail.com","thabo@techxolutions.com",app_info.company_email])
 
         msg.html = f"""<html> 
 <head>
@@ -279,7 +279,7 @@ def send_email(app_info):
                             <span style="font-size: large;font-weight: 600;color:#606060">Thabo Maziya</span>
                             <span style="font-size: large;font-weight: 600;color:#606060"></span>
                             <div class="mail-links"><img style="height:25px" src="http://techxolutions.com/images/email_icon.png"/><span>thabo@techxolutions.com</span></div>
-                            <div class="mail-links"><img style="height:25px" src="http://techxolutions.com/images/telephone_icon.png"/><span>(+687) 7641 2255</span></div>
+                            <div class="mail-links"><img style="height:25px" src="http://techxolutions.com/images/telephone_icon.png"/><span>(+268) 7641 2255</span></div>
                         </td>
                         <td style="vertical-align: top;" class="sign-column">
                             <div style="font-weight: 600;color:#134f72;font-size: 20px;" class="services">Tech Xolutions(TechX)</div>
