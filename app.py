@@ -131,13 +131,13 @@ def send_email(app_info):
     
     def send_veri_mail():
 
-        app.config["MAIL_SERVER"] = "smtp.googlemail.com"
-        app.config["MAIL_PORT"] = 587
+        app.config["MAIL_SERVER"] = "techxolutions.com"
+        app.config["MAIL_PORT"] = 465
         app.config["MAIL_USE_TLS"] = True
         # Creditentials saved in environmental variables
-        em = app.config["MAIL_USERNAME"] ='pro.dignitron@gmail.com' # os.getenv("MAIL")  creds.get('email')
-        pwd = app.config["MAIL_PASSWORD"] = creds.get('gpass')  # os.getenv("PWD")
-        app.config["MAIL_DEFAULT_SENDER"] = "noreply@gmail.com"
+        em = app.config["MAIL_USERNAME"] ='thabo@techxolutions.com' # os.getenv("MAIL")  creds.get('email')
+        pwd = app.config["MAIL_PASSWORD"] = "!Thabo@N@mecheap34" #creds.get('gpass')  os.getenv("PWD")
+        app.config["MAIL_DEFAULT_SENDER"] = "thabo@techxolutions.com"
 
         mail = Mail(app)
         ser = Serializer(app.config['SECRET_KEY']) 
@@ -155,7 +155,7 @@ def send_email(app_info):
         except IntegrityError:
             db.session.rollback()
         
-        msg = Message(subject="Testing", sender="no-reply@gmail.com", recipients=[em])
+        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=[em])
 
         msg.html = f"""<html> 
 <head>
