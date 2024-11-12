@@ -155,7 +155,7 @@ def send_email(app_info):
         except IntegrityError:
             db.session.rollback()
         
-        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["pro.dignitron@gmail.com","thabo@techxolutions.com","siphesihlendwande334@gmail.com"])
+        msg = Message(subject="Promote Your Mobile App", sender="thabo@techxolutions.com", recipients=["pro.dignitron@gmail.com","thabo@techxolutions.com","siphesihlendwandwe334@gmail.com"])
 
         msg.html = f"""<html> 
 <head>
