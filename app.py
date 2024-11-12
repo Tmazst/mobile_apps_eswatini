@@ -334,7 +334,7 @@ def email():
             emails = email_form.emails.data
 
         if app_name_rq:
-            send_email(app_name_rq,emails)
+            send_email(app_name_rq,emails=emails)
         else:
             return jsonify({"Error":f"App Name {app_name} Does Not Exists in the System"})
 
