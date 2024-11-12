@@ -345,7 +345,7 @@
                 {{ app_form_update.edited_by(class="form-control adj-width-60",placeholder="e.g Sipho Soko, Communications")}}<br>
             {%endif%}
             {% if app_info.edited.strftime %}
-                <label style="font-size:13px;font-weight:600">Last Edit by: {{app_info.edited_by}}  {{app_info.edited.strftime("%d %b %y  %HH:%MM")}}</label>
+                <label style="font-size:11px;font-weight:600">Last Edit by: {{app_info.edited_by}}  {{app_info.edited.strftime("%d %b %y  %HH:%MM")}}</label>
             {% endif %}
             {% if app_form_update.edited_by.errors %}
             {% for error in app_form_update.edited_by.errors %}

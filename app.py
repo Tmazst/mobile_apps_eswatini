@@ -207,10 +207,12 @@ def send_email(app_info):
             <div class="header">
                 <img style="height: inherit;" src="https://techxolutions.com/images/logo.png" alt="Image"" /> <img style="height: inherit;" src="https://techxolutions.com/images/eswatini_flag.png" /> 
             </div>
+
             <!-- Subject  -->
             <div class="subject">
                <span class="sub-titles" style="background-color: #c4c4c4;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;">Subject</span> <span style="font-size: large;">Showcase Your App on Our New Platform!</span>
             </div><br><br>
+
             <!-- Body Message  -->
             <section style="flex-wrap: nowrap;padding:10px" class="">
                 <!-- Greeting Message  -->
@@ -219,15 +221,13 @@ def send_email(app_info):
                     out on behalf of Tech Xolutions(TechX). We are launching a new initiative "TechConnectPlus" aimed at enhancing
                     the visibility and accessibility of mobile applications developed in Eswatini, with a focus on better service delivery for EmaSwati.
                 </div><br>
+
                 <div style="color:rgb(53, 53, 53)" class="content"> We believe that your app {app_info.name} significantly contributes to the needs of Eswatini
                     community and would like to feature it prominently on our centralized platform. 
                     This platform serve as a repository where users can easily discover and explore mobile applications 
                     that cater to their service requirements. 
                 </div>
                 
-                
-        
-
                 <!-- Link  -->
                 <div style="margin:20px auto;width:max-content"><span>Please Visit TechConnect Plus here:</span><a href="https://eswatiniapps.techxolutions.com"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>
                 <br>
