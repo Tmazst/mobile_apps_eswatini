@@ -223,7 +223,8 @@ def send_email(app_info):
                 </div><br>
 
                 <div style="color:rgb(53, 53, 53)" class="content"> We believe that your app {app_info.name} significantly contributes to the needs of Eswatini
-                    community and would like to feature it prominently on our centralized platform. 
+                    community and would like to feature it prominently on our centralized platform. Many Mobile Apps developed locally take some time to get recognition across the whole community of EmaSwati.
+    
                     This platform serve as a repository where users can easily discover and explore mobile applications 
                     that cater to their service requirements. 
                 </div>
@@ -267,6 +268,7 @@ def send_email(app_info):
                 <span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">App Info</span></a></div>
                 <!-- Footer / Email Signature -->
                 <p style="font-weight:600;font-size:13px">Note:<span style="font-weight:400">App Name, Description, Icon, and Links are sourced from Google Play Store.</span></p>
+                <p style="font-weight:500;font-size:13px"><span style="font-weight:400">Publising Your App with TechConnectPlus is Free of Charge</span></p>
                 </div><br><br>
 
 
