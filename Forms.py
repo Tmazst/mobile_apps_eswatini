@@ -53,6 +53,8 @@ class App_Info_Form(FlaskForm):
         ("Weather", "Weather"),
         ("Sports & Re-Creational", "Sports & Re-Creational"),
         ("Betting & Casino", "Betting & Casino"),
+        ("Natural Resources", "Natural Resources"),
+        ("Energy", "Energy"),
         ("News", "News"),
         ("Music", "Music"),
         ("Shopping", "Shopping"),
