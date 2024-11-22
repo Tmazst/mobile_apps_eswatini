@@ -228,6 +228,8 @@ def send_email(app_info,emails=None):
                     This platform serve as a repository where users can easily discover and explore mobile applications 
                     that cater to their service requirements. 
                 </div>
+
+                <img height="120px"  src="https://techxolutions.com/images/{app_info.name}.jpg" />
                 
                 <!-- Link  -->
                 <div style="margin:20px auto;width:max-content"><span>Please Visit TechConnect Plus here:</span><a href="https://prelaunch.techxolutions.com"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>

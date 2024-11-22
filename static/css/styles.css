@@ -2203,6 +2203,9 @@ to{
 
 @media all and (max-width: 575px){
 
+.cat-subtitle{
+    min-width:none;
+}
 
 .logo{
     height:120px;

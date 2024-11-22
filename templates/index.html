@@ -49,18 +49,17 @@
 
 <section style="flex-wrap: nowrap;background-color: " class="container">
 {% if layout == "blockview" or not layout %}
-
     <div id="view-cont" style="width:; overflow: auto;background-color:;">
         <div class="scroll-container" style="background-color: rgb(255, 254, 254);">
             {% for app in apps %}
             {% if app.publish %}
             <div class="app-container">
                 <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
-                <div class="app-name">{{app.name.strip()|truncate(length=20, end='...')}}</div>
+                <div class="app-name">{{app.name.strip() | truncate(length=20, end='...')}}</div>
                 {% if app.web_link %}
-                    <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name |truncate(length=25, end='...')}}</span></div></a>
+                    <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name | truncate(length=25, end='...')}}</span></div></a>
                 {% else %}
-                    <div class="owner-name"><span>{{app.company_name |truncate(length=28, end='...')}}</span></div>
+                    <div class="owner-name"><span>{{app.company_name | truncate(length=28, end='...')}}</span></div>
                 {% endif %}
                 <div class="description">{{app.description|truncate(length=150, end='.....') }}</div>
                 <!-- <img class="icon-imgs" src="static/icons/download-icon.png" /> -->
