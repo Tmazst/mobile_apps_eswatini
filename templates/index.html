@@ -57,7 +57,7 @@
                 <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
                 <div class="app-name">{{app.name.strip() | truncate(length=20, end='...')}}</div>
                 {% if app.web_link %}
-                    <a href="{{app.web_link}}"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name | truncate(length=25, end='...')}}</span></div></a>
+                    <a href="{{app.web_link}}" target="_blank"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name | truncate(length=25, end='...')}}</span></div></a>
                 {% else %}
                     <div class="owner-name"><span>{{app.company_name | truncate(length=28, end='...')}}</span></div>
                 {% endif %}
@@ -126,7 +126,7 @@
                 <div class="reactions-container">
                     <div class="pre-react">
                         {% if app.web_link %}
-                            <a class="" style="height:" href="{{app.web_link}}"><img class="icon-links" src="static/icons/globe.png" /></a>
+                            <a class="" style="height:" href="{{app.web_link}}" target="_blank"><img class="icon-links" src="static/icons/globe.png" /></a>
                         {% endif %}
                         {% if app.facebook %}
                             <a class="" style="" href="#"><img class="icon-links" src="static/icons/facebook-icon.png" /></a>
@@ -144,7 +144,7 @@
                     <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
                     <div style="white-space: wrap;" class="app-name">{{app.name}}</div>
                     {% if app.web_link %}
-                        <a href="{{app.web_link}}"><div style="white-space: wrap;" class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
+                        <a href="{{app.web_link}}" target="_blank"><div style="white-space: wrap;" class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
                     {% else %}
                         <div class="owner-name"><span>{{app.company_name}}</span></div>
                     {% endif %}

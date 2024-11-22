@@ -230,7 +230,7 @@ def send_email(app_info,emails=None):
                 </div>
                 
                 <!-- Link  -->
-                <div style="margin:20px auto;width:max-content"><span>Please Visit TechConnect Plus here:</span><a href="https://prelaunch.techxolutions.com"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>
+                <div style="margin:20px auto;width:max-content"><span>Please Visit TechConnect Plus here:</span><a href="https://prelaunch.techxolutions.com" target="_blank"><span style="background-color: #00a550;color:white;padding:5px 10px;border-radius: 15px;font-weight: 600;font-size: 16px;" class="sub-titles">website</span></div></a>
                 <br>
                 <div style="width:60%;margin:10px auto" class="content objectives">
                     <!-- Sub Topic  -->
