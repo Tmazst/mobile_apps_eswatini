@@ -44,6 +44,7 @@ class App_Info_Form(FlaskForm):
         ("Lifestyle", "Lifestyle"),
         ("Media", "Media"),
         ("Food", "Food"),
+        ("Insurance", "Insurance"),
         ("Fast Food", "Fast Food"),
         ("Techonology", "Techonology"),
         ("Training & Skills", "Training & Skills"),
