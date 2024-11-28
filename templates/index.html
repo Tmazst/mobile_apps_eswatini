@@ -49,7 +49,7 @@
 
 <section style="flex-wrap: nowrap;background-color: " class="container">
 {% if layout == "blockview" or not layout %}
-    <div id="view-cont" style="width:; overflow: auto;background-color:;">
+    <!-- <div id="view-cont" style="width:; overflow: auto;background-color:;"> -->
         <div class="scroll-container" style="background-color: rgb(255, 254, 254);">
             {% for app in apps %}
             {% if app.publish %}
@@ -102,7 +102,7 @@
             {% endif %}
             {% endfor %}
         </div> 
-    </div>
+    <!-- </div> -->
 
 
 {% elif layout == "listview"  %}
