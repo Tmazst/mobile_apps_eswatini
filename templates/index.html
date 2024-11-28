@@ -92,11 +92,10 @@
                         </a>
                         {% endif %}
                     </div>
-                </div><br>
-                {% if not app.uptodown_link or app.huawei_link or app.apkpure_link  %}
+                </div><br><div style="flex-grow:1"></div>
+                {% if not app.uptodown_link or not app.huawei_link or not app.apkpure_link  %}
                 <div onclick="revealIcons('{{app.id}}')" id="reveal-icons-btns-{{app.id}}" class="btns">+more</div>
                 {%else%}
-                <div style="flex-grow:1"></div>
                 <a href='{{app.playstore_link}}'><div class="btns">explore</div></a>
                 {%endif%}
             </div>
