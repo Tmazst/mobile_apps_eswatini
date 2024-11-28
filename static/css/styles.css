@@ -2273,7 +2273,7 @@ to{
 .scroll-container{
     flex-direction: column;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: stretch !important;
     /* background-color: #0F75BC; */
     margin:10px auto;
 }
