@@ -65,29 +65,29 @@
                 <!-- <img class="icon-imgs" src="static/icons/download-icon.png" /> -->
                 <div class="labels">Download</div>
                 <div style="height:;" class="links general-flex">
-                    <a style="height:inherit"  href="{{app.playstore_link}}">
+                    <a style="height:inherit"  href="{{app.playstore_link}}" target="_blank">
                         <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
                     </a> 
                 </div>
                 <div id="other-pltfms-{{app.id}}" style="height:;" class="general-flex-icons">
                     {% if app.ios_link %}
-                    <a style="height:inherit"  href="{{app.ios_link}}">
+                    <a style="height:inherit"  href="{{app.ios_link}}" target="_blank">
                         <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
                     </a> 
                     {% endif %}
                     <div style="background-color:;" class="general-flex">
                         {% if app.uptodown_link %}
-                        <a style="" href="{{app.uptodown_link}}">
+                        <a style="" href="{{app.uptodown_link}}" target="_blank">
                             <img style="height:;" class="icon-imgs" src="static/icons/UpToDown.png" />
                         </a> 
                         {% endif %}
                         {% if app.huawei_link %}
-                        <a style="" href="{{app.huawei_link}}">
+                        <a style="" href="{{app.huawei_link}}" target="_blank">
                             <img style="height:;" class="icon-imgs" src="static/icons/huawei-icon.png" />
                         </a>
                         {% endif %}
                         {% if app.apkpure_link %}
-                        <a style="" href="{{app.apkpure_link}}">
+                        <a style="" href="{{app.apkpure_link}}" target="_blank">
                             <img style="height:;" class="icon-imgs" src="static/icons/apkpure-icon.png" />
                         </a>
                         {% endif %}
@@ -96,7 +96,7 @@
                 {% if not app.uptodown_link or not app.huawei_link or not app.apkpure_link  %}
                 <div onclick="revealIcons('{{app.id}}')" id="reveal-icons-btns-{{app.id}}" class="btns">+more</div>
                 {%else%}
-                <a href='{{app.playstore_link}}'><div class="btns">explore</div></a>
+                <a href='{{app.playstore_link}}' target="_blank"><div class="btns">explore</div></a>
                 {%endif%}
             </div>
             {% endif %}
