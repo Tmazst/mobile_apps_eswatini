@@ -55,6 +55,8 @@ class App_Info_Form(FlaskForm):
         ("Betting & Casino", "Betting & Casino"),
         ("Natural Resources", "Natural Resources"),
         ("Energy", "Energy"),
+        ("Savings", "Savings"),
+        ("Loans", "Loans"),
         ("News", "News"),
         ("Music", "Music"),
         ("Shopping", "Shopping"),
