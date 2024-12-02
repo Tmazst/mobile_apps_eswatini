@@ -322,7 +322,7 @@
 
         <!-------Company Email--------->
         <div class="job-ad-group marginise-bottom">
-            {{ app_form_update.edited_by.label(class="labels")}}
+            {{ app_form_update.company_email.label(class="labels")}}
             {% if app_info.company_email is not none %}
                 {{ app_form_update.company_email(class="form-control adj-width-60",value=app_info.company_email)}}<br>
             {%else%}
