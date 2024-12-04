@@ -99,3 +99,27 @@ class App_Access_Credits(db.Model):
     app_id = db.Column(db.Integer,ForeignKey("app_info.id"),unique=True)
     token = db.Column(db.String(255))
 
+
+class stats_visitors(db.Model):
+
+    __tablename__ = "stats_visitors"
+
+    id = db.Column(db.Integer,primary_key=True)
+    user_addr=db.Column(db.String(255))
+    device=db.Column(db.String(255))
+    browser=db.Column(db.String(255))
+    timestamp=db.Column(db.DateTime)
+
+class stats_app_dlink(db.Model):
+
+    __tablename__ = "stats_app_dlink"
+    id = db.Column(db.Integer,primary_key=True)
+    app_name=db.Column(db.String(255))
+    download_link=db.Column(db.String(255))
+    # visitor_act=db.Column(db.Integer,ForeignKey("stats_visitors.id"),unique=True)
+    user_addr=db.Column(db.String(255))
+    device=db.Column(db.String(255))
+    browser=db.Column(db.String(255))
+    timestamp=db.Column(db.DateTime)
+
+

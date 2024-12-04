@@ -1,5 +1,5 @@
 
-from flask import Flask,render_template,url_for,redirect,request,flash,jsonify
+from flask import Flask,render_template,url_for,redirect,request,flash,jsonify,make_response
 from flask_login import login_user, LoginManager,current_user,logout_user, login_required
 from sqlalchemy.exc import IntegrityError
 from Forms import *
@@ -22,6 +22,7 @@ import json
 # import pyodbc
 
 import mysql.connector
+import user_agents
 
 
 
@@ -110,6 +111,20 @@ def home():
     db.create_all()
     apps = App_Info.query.all()
 
+    user_agents_str = request.headers.get('User-agent')
+    user_data=user_agents.parse(user_agents_str)
+    usr_addr=request.remote_addr
+
+    if user_data:
+        stats = stats_visitors(
+            timestamp=datetime.now(),
+            user_addr=usr_addr,device=user_data.get_device(),browser=user_data.get_browser()
+        )
+
+        db.session.add(stats)
+        db.session.commit()
+
+
     for app in apps:
         print("APP CODES 7 NM: ",app.app_code,"NM",app.name)
 
@@ -118,9 +133,33 @@ def home():
     if request.args.get('icon'):
         layout = request.args.get('icon')
 
-
+    # return jsonify(url)
     return render_template("index.html", apps=apps, layout=layout, categories=categories)
 
+
+@app.route('/track_click', methods=['POST'])
+def track_click():
+    data = request.get_json()
+    clicked_link = data.get('clicked_link')
+    appnm = data.get('appnm')
+
+    user_agents_str = request.headers.get('User-agent')
+    user_data=user_agents.parse(user_agents_str)
+    usr_addr=request.remote_addr
+
+    if clicked_link:
+        stats = stats_app_dlink(
+            app_name=appnm,download_link=clicked_link,user_addr=usr_addr,device=user_data.get_device(),
+            browser=user_data.get_browser(),timestamp=datetime.now()
+        )
+
+        db.session.add(stats)
+        db.session.commit()
+        # print(f'User clicked the link: {clicked_link}')
+        # print(f'...and Name: {appnm}')
+        # You can perform logging, analytics, or any other processing here
+
+    return jsonify(success=True)
 
 @app.route("/about", methods=['POST','GET'])
 def about():

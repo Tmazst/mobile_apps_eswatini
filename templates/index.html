@@ -65,13 +65,13 @@
                 <!-- <img class="icon-imgs" src="static/icons/download-icon.png" /> -->
                 <div class="labels">Download</div>
                 <div style="height:;" class="links general-flex">
-                    <a style="height:inherit"  href="{{app.playstore_link}}" target="_blank">
+                    <a style="height:inherit"  href="{{app.playstore_link}}" target="_blank" onclick="trackClick('{{ app.playstore_link }}','{{app.name}}')">
                         <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
                     </a> 
                 </div>
                 <div id="other-pltfms-{{app.id}}" style="height:;" class="general-flex-icons">
                     {% if app.ios_link %}
-                    <a style="height:inherit"  href="{{app.ios_link}}" target="_blank">
+                    <a style="height:inherit"  href="{{app.ios_link}}" target="_blank" onclick="trackClick('{{ app.ios_link }}','{{app.name}}')">
                         <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
                     </a> 
                     {% endif %}
@@ -152,11 +152,11 @@
 
                     <div class="labels">Download</div>
                 <div style="height:;" class="links general-flex">
-                    <a style="height:inherit"  href="{{app.playstore_link}} " target="_blank">
+                    <a style="height:inherit"  href="{{app.playstore_link}} " target="_blank" onclick="trackClick('{{ app.playstore_link }}','{{app.name}}')">
                         <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
                     </a> 
                     {% if app.ios_link %}
-                    <a style="height:inherit"  href="{{app.ios_link}}">
+                    <a style="height:inherit"  href="{{app.ios_link}}" onclick="trackClick('{{ app.ios_link }}','{{app.name}}')">
                         <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
                     </a> 
                     {% endif %}
@@ -272,6 +272,16 @@ document.getElementById('scroll-right').addEventListener('click', function() {
     }
 });
 
+function trackClick(link,name) {
+        // Send a fetch request to the Flask endpoint to log the click
+        fetch('/track_click', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ clicked_link: link,appnm:name })
+        });
+    }
 
 </script>
 {% endblock %}
