@@ -25,7 +25,6 @@ import mysql.connector
 import user_agents
 
 
-
 #Change App
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "sdsdjfe832j2rj_32j"
@@ -36,6 +35,7 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle':280}
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOADED"] = 'static/uploads'
+
 
 # Initialise App with DB 
 db.init_app(app)
