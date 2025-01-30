@@ -168,7 +168,7 @@ encrypt_password = Bcrypt()
 @app.context_processor
 def inject_ser():
 
-    return dict(ser=ser)
+    return dict(ser=ser) #universal
 
 
 @app.route("/", methods=['POST','GET'])
