@@ -1,5 +1,5 @@
 
-from flask import Flask,render_template,url_for,redirect,request,flash,jsonify,make_response
+from flask import Flask,render_template,url_for,redirect,request,flash,jsonify,make_response,session
 from flask_login import login_user, LoginManager,current_user,logout_user, login_required
 from sqlalchemy.exc import IntegrityError
 from Forms import *
@@ -10,6 +10,7 @@ import secrets
 import os
 from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
+from authlib.integrations.flask_client import OAuth
 # from bs4 import BeautifulSoup as bs
 from flask_colorpicker import colorpicker
 from image_processor import ImageProcessor
@@ -17,6 +18,8 @@ from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 import itsdangerous
 import random
 import json
+from PIL import Image
+import re
 # import sqlite3
 # import pymysql
 # import pyodbc
@@ -29,14 +32,16 @@ import user_agents
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "sdsdjfe832j2rj_32j"
 # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///eswatiniapps_db.db"
-# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:tmazst41@localhost/eswatini_apps_db" #?driver=MySQL+ODBC+8.0+Driver"
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://techtlnf_tmaz:!Tmazst41#@localhost/techtlnf_apps_eswatini"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:tmazst41@localhost/images_hub_db" #?driver=MySQL+ODBC+8.0+Driver"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://techtlnf_tmaz:!Tmazst41#@localhost/techtlnf_apps_eswatini"
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle':280}
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["UPLOADED"] = 'static/uploads'
+app.config["UPLOADED"] = 'static/uploads/usr_images'
+app.config["THUMBS"] = 'static/uploads/usr_images/thumbnails'
 
 
+oauth = OAuth(app)
 # Initialise App with DB 
 db.init_app(app)
 
@@ -55,23 +60,62 @@ if os.path.exists('client.json'):
 def load_user(user_id):
     return User.query.get(user_id)
 
+def compress_image(image_path, target_size_kb):
+    #e.g. static/images/usr_images/sipho_2/thumbs
+    thumbnail_dir = app.config["THUMBS"]
 
+    if not os.path.exists(thumbnail_dir):
+        os.makedirs(thumbnail_dir)
 
-def process_file(file):
+    # Open an image file
+    with Image.open(image_path) as img:
+
+        # try:
+        img = img.convert('RGB')  # Convert to RGB for compatibility with JPEG
+        # if img.mode in ('RGBA', 'LA'):
+        #     img = img.convert('RGB')  # Convert to RGB
+        # elif img.mode == 'L':
+        #     img = img.convert('L')  # Convert to L if you want to keep it grayscale without alpha
+
+        # Calculate quality based on the target size
+        quality = 85  # Starting quality
+
+        while True:
+            print("Debug Co,pression: ",image_path,thumbnail_dir)
+            file = os.path.basename(image_path)
+            # Save to a temporary file to check the size
+            # temp_file = image_path.replace(os.path.splitext(image_path)[1], "_temp.jpg")
+            img.save(os.path.join(thumbnail_dir,file), format='JPEG', quality=quality)
+
+            # Check size
+            if os.path.getsize(thumbnail_dir) <= target_size_kb * 1024:  # Convert KB to bytes
+                break
+            quality -= 5  # Decrease quality to reduce file size
+
+            if quality < 10:  # Minimum quality threshold
+                break
+
+            # Move the temp file to the original file name or save as a new file
+            # os.replace(temp_file, image_path)
+            
+        # except Exception as e:
+        #     print(f"Error standardizing image input: {e}")
+        #     return None 
+
+def process_file(file,usr):
         global img_checker
-        # img_checker = Dont_Update
-        # Avoid duplication of same image in a session 
-        # if img_checker.img  == file.filename:
-        #     print("File updated")
-        #     return img_checker.cur_file
-        # else:
+        target_size = 90
         
         filename = secure_filename(file.filename)
 
-        # img_checker.img = file.filename
+        file_path = os.path.join(app.config["UPLOADED"])
+
+        #static/images/usr_images
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
 
         _img_name, _ext = os.path.splitext(file.filename)
-        gen_random = secrets.token_hex(8)
+        gen_random = secrets.token_hex(8) + "_" + str(usr.id)
         new_file_name = gen_random + _ext
 
         print("DEBIG IMAGE: ",new_file_name)
@@ -80,12 +124,35 @@ def process_file(file):
             return 'No selected file'
 
         if file.filename:
-            file_saved = file.save(os.path.join("static/images",new_file_name))
+            new_path =os.path.join(file_path,new_file_name)
+            file_saved = file.save(new_path)
+            compress_image(new_path,target_size_kb=90)
             flash(f"File Upload Successful!!", "success")
+
             return new_file_name
 
         # else:
         #     return f"Allowed are [ .png, .jpg, .jpeg, .gif] only"
+
+if os.path.exists('client.json'):
+    appConfig = {
+        "OAUTH2_CLIENT_ID" : creds['clientid'],
+        "OAUTH2_CLIENT_SECRET":creds['clientps'],
+        "OAUTH2_META_URL":"",
+        "FLASK_SECRET":"sdsdjsdsdjfe832j2rj_32jfesdsdjfe832j2rj32j832",
+        "FLASK_PORT": 5000  
+    }
+
+
+    oauth.register("appenda_oauth",
+                client_id = appConfig.get("OAUTH2_CLIENT_ID"),
+                client_secret = appConfig.get("OAUTH2_CLIENT_SECRET"),
+                    api_base_url='https://www.googleapis.com/',
+                    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo', 
+                client_kwargs={ "scope" : "openid email profile"},
+                server_metadata_url= 'https://accounts.google.com/.well-known/openid-configuration',
+                jwks_uri = "https://www.googleapis.com/oauth2/v3/certs"
+                )
 
 ser = Serializer(app.config['SECRET_KEY']) 
 
@@ -96,46 +163,53 @@ def createall(db):
 #Password Encryption
 encrypt_password = Bcrypt()
 
+
 #Populating variables across all routes
 @app.context_processor
 def inject_ser():
-   
-     # Define or retrieve the value for 'ser'
 
     return dict(ser=ser)
 
 
 @app.route("/", methods=['POST','GET'])
 def home():
+
+    images=None
     layout = None
     db.create_all()
-    apps = App_Info.query.all()
+    al = request.args.get("al")
+    cat = request.args.get("cat")
+    chck_len=True
 
-    user_agents_str = request.headers.get('User-agent')
-    user_data=user_agents.parse(user_agents_str)
-    usr_addr=request.remote_addr
+    if cat:
+        images = Images.query.filter_by(image_category=cat).all()
+    elif al:
+        images = Images.query.all()
+    else:
+        images = Images.query.all()
 
-    if user_data:
-        stats = stats_visitors(
-            timestamp=datetime.now(),
-            user_addr=usr_addr,device=user_data.get_device(),browser=user_data.get_browser()
-        )
-
-        db.session.add(stats)
-        db.session.commit()
-
-
-    for app in apps:
-        print("APP CODES 7 NM: ",app.app_code,"NM",app.name)
-
-    categories= {app.app_category for app in apps}
+    categories= {app.image_category for app in Images.query.all()}
 
     if request.args.get('icon'):
         layout = request.args.get('icon')
 
-    # return jsonify(url)
-    return render_template("index.html", apps=apps, layout=layout, categories=categories)
+    return render_template("index.html", images=images, layout=layout, categories=categories,usr_obj=User,chck_len=chck_len)
 
+@app.route('/download_img', methods=['POST',"GET"])
+def download():
+
+    img = request.args.get("img_id")
+    print("DEBUG: ", img)
+    images = Images.query.filter_by(id=img).first()
+
+    return render_template("download.html", image=images, user=User)
+
+@app.route('/logout')
+def log_out():
+
+    logout_user()
+
+    return redirect(url_for('home'))
 
 @app.route('/track_click', methods=['POST'])
 def track_click():
@@ -148,7 +222,7 @@ def track_click():
     usr_addr=request.remote_addr
 
     if clicked_link:
-        stats = stats_app_dlink(
+        stats = stats_image_dlink(
             app_name=appnm,download_link=clicked_link,user_addr=usr_addr,device=user_data.get_device(),
             browser=user_data.get_browser(),timestamp=datetime.now()
         )
@@ -165,6 +239,7 @@ def track_click():
 def about():
 
     return render_template("about.html")
+
 
 def send_email(app_info,emails=None):
     
@@ -380,41 +455,28 @@ def email():
     return render_template("send_email.html",email_form=email_form)
 
 
-@app.route("/app_form", methods=['POST','GET'])
-def app_form():
+@app.route("/image_form", methods=['POST','GET'])
+@login_required
+def image_form():
 
-    app_form = App_Info_Form()
+    app_form = ImagesForm()
 
-    if request.method == "POST":#and app_form.validate_on_submit()
-        appinfo = App_Info(
-            name = app_form.name.data.strip(),description = app_form.description.data.strip(),
-            version_number = app_form.version_number.data,playstore_link = app_form.playstore_link.data,
-            facebook_link = app_form.facebook_link.data,whatsapp_link = app_form.whatsapp_link.data,
-            x_link = app_form.x_link.data,linkedin_link = app_form.linkedin_link.data,
-            youtube_link = app_form.youtube_link.data, web_link=app_form.web_link.data,
-            github_link = app_form.github_link.data,company_name = app_form.company_name.data,company_contact = app_form.company_contact.data
-            ,company_email = app_form.company_email.data,ios_link = app_form.ios_link.data,uptodown_link = app_form.uptodown_link.data,
-            app_category = app_form.app_category.data,timestamp=datetime.now(),app_code=datetime.now().microsecond,huawei_link = app_form.huawei_link.data,apkpure_link=app_form.apkpure_link.data
-        )
+    if request.method == "POST":
 
-        # img = process_file(app_form.app_icon.data)
-        if app_form.app_icon.data:
-            appinfo.app_icon = process_file(app_form.app_icon.data)
+        image_info = Images(
+            img_name=app_form.name.data.strip(),description=app_form.description.data.strip(),
+            image_category=app_form.image_category.data,timestamp=datetime.now(),uid=current_user.id
+            )
 
-        # Check Code does not exists 
-        validate_apc = App_Info.query.filter_by(app_code= appinfo.app_code).first()
+        if app_form.image.data:
+            image_info.image_thumbnail = process_file(app_form.image.data,current_user)
 
-        if validate_apc:
-            appinfo.app_code = datetime.now().microsecond
-            db.session.add(appinfo)
-            db.session.commit()
-        else:
-            db.session.add(appinfo)
-            db.session.commit()
+        db.session.add(image_info)
+        db.session.commit()
 
-        flash("Successful","success")
+        flash("Upload was Successful👍","success")
 
-    return render_template("app_form.html",app_form=app_form)
+    return render_template("image_form.html",app_form=app_form)
 
 
 @app.route("/edit_app", methods=['POST','GET'])
@@ -435,9 +497,14 @@ def edit_app():
 
     return render_template("edit_app.html",edit_app=edit_app)
 
+
 class Save_Values:
     app_obj=None
 
+# Create a custom Jinja2 filter to remove special characters
+@app.template_filter('remove_special_chars')
+def remove_special_chars(s):
+    return re.sub(r'[^a-zA-Z0-9\s]', '', s)
 
 @app.route("/app_form_editor", methods=['POST','GET'])
 def app_form_editor(app_name=None,code=None):
@@ -567,7 +634,7 @@ def app_form_edit(token):
     return render_template("app_form_edit.html",app_form_update=app_form_update,app_info=app_info)
 
 
-@app.route("/vac_signup", methods=["POST","GET"])
+@app.route("/signup", methods=["POST","GET"])
 def sign_up():
 
     register = Register()
@@ -582,18 +649,11 @@ def sign_up():
 
             hashd_pwd = encrypt_password.generate_password_hash(register.password.data).decode('utf-8')
 
-            if register.company_signup.data:
-                user = company_user(name=register.name.data, email=register.email.data, password=hashd_pwd,
-                        confirm_password=hashd_pwd,image="logo_template.png",company_contacts=register.contacts.data,role = 'company_user',
-                        timestamp=datetime.now())
-            # else:
-            #     user = vacationer_user(name=register.name.data, email=register.email.data, password=hashd_pwd,
-            #             confirm_password=hashd_pwd,image="default.jpg",contacts=register.contacts.data,
-            #             timestamp=datetime.now(timezone.utc),role = 'vacationer_user')
-                             
-            # print('Role Checked!: ',user.role)
+            user = gen_user(
+                    name=register.name.data, email=register.email.data, password=hashd_pwd,
+                    confirm_password=hashd_pwd,image="default.png"
+                    )
 
-            # try:
             if not Register().validate_email(register.email.data):
                 db.session.add(user)
                 db.session.commit()
@@ -602,16 +662,84 @@ def sign_up():
             else:
                 flash(f"Something went wrong, check for errors", "error")
                 print('Sign up unsuccessful')
+
             return redirect(url_for('login'))
-            # except: # IntegrityError:
-            #     pass
 
         elif register.errors:
             flash(f"Account Creation Unsuccessful ", "error")
             print(register.errors)
 
     # from myproject.models import user
-    return render_template("vac-signup-form.html",register=register)
+    return render_template("signup_form.html",register=register)
+
+# User Account
+@app.route("/user_account", methods=["POST", "GET"])
+def user_account():
+
+    usr_account=gen_user.query.get(current_user.id)
+    account_form = Register(obj=usr_account)
+
+    if account_form.validate_on_submit():
+
+        if request.method == 'POST':
+
+            usr_account.contacts=account_form.contacts.data
+            usr_account.town=account_form.town.data
+            usr_account.address=account_form.address.data
+            
+            if account_form.image.data:
+                usr_account.image = process_file(account_form.image.data)
+
+            # try:
+            db.session.commit()
+            flash(f"Update Successful!", "success")
+            print("Update Successful!")
+
+
+    return render_template('user_account.html',account_form =account_form, usr_account=usr_account)
+
+#Verification Pending
+@app.route("/login", methods=["POST","GET"])
+def login():
+
+    login = Login()
+
+    if login.validate_on_submit():
+
+        if request.method == 'POST':
+
+            user_login = User.query.filter_by(email=login.email.data).first()
+            if user_login and encrypt_password.check_password_hash(user_login.password, login.password.data):
+
+                # if not user_login.verified:
+                #     login_user(user_login)
+                #     return redirect(url_for('verification'))
+                # else:
+                # After login required prompt, take me to the page I requested earlier
+                # login_user(user_login)
+                # print("No Verification Needed: ", user_login.verified)
+
+                # Check If are they allocated to a church 
+
+                login_user(user_login)
+                flash(f"Hey! {user_login.name.title()} You're Logged In!", "success")
+
+                req_page = request.args.get('next')
+                return redirect(req_page) if req_page else redirect(url_for('home'))
+                
+            else:
+                flash(f"Login Unsuccessful, please use correct email or password", "error")
+                # print(login.errors)
+    else:
+        print("No Validation")
+        if login.errors:
+            for error in login.errors:
+                print("Errors: ", error)
+        else:
+            print("No Errors found", login.email.data, login.password.data)
+
+    return render_template("login.html",login=login)
+
 
 @app.route('/search', methods=['GET'])
 def search_in_table():
@@ -653,6 +781,109 @@ def search_in_table():
     conn.close()
 
     return render_template('search_results.html', apps_obj=apps_obj, apps=apps,search_value=search_value)
+
+
+@app.route("/google_signup", methods=["POST","GET"])
+def google_signup():
+
+    return render_template('google_signup.html')
+
+#google login
+@app.route("/google_login", methods=["POST","GET"])
+def google_login():
+
+    # print("DEBUG CREDITENTAILS: ",appConfig.get("OAUTH2_CLIENT_ID"),' ',appConfig.get("OAUTH2_CLIENT_SECRET"))
+
+    return oauth.appenda_oauth.authorize_redirect(redirect_uri=url_for("google_signin",_external=True))
+
+
+#login redirect
+@app.route("/google_signin", methods=["POST","GET"])
+def google_signin():
+
+    token = oauth.appenda_oauth.authorize_access_token()
+
+    session['user'] = token
+
+    pretty=session.get("user")
+
+    usr_info = pretty.get('userinfo')
+    verified = usr_info.get("email_verified")
+    usr_email = usr_info.get("email")
+    usr_name=usr_info.get("name")
+    usr_athash=usr_info.get("at_hash")
+
+    if not verified:
+        flash("Access Denied!, Your Email is not verified with Google")
+        flash("Please, Set up your account manually")
+        return redirect(url_for('sign_up'))
+    
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
+    #Sign Up
+    if not User.query.filter_by(email=usr_email).first():
+
+        print("Email Not Found!, We will register")
+
+        # context
+        hashd_pwd = encrypt_password.generate_password_hash(usr_athash).decode('utf-8')
+        user1 = gen_user(name=usr_name, email=usr_email, password=hashd_pwd,
+                        confirm_password=hashd_pwd, image="default.jpg",timestamp=datetime.now(),verified=True)
+
+        try:
+            db.session.add(user1)
+            db.session.commit()
+
+            #Login user
+            usr_obj = User.query.filter_by(email=usr_email).first()
+            #Check if user have a church id
+            if usr_obj.chrch_id:
+                login_user(usr_obj)
+            else:
+                return redirect(url_for('select_church'))
+
+            # if not current_user.church_local and not current_user.church_zone:
+            #     return redirect(url_for('finish_signup'))
+        
+        except IntegrityError:
+            db.session.rollback()  # Rollback the session on error
+            return jsonify({"message": "Email already exists"}), 409
+        
+        except Exception as e:
+                db.session.rollback()  # Rollback on any other error
+                return jsonify({"message": "An error occurred", "error": str(e)}), 500
+        
+    else:
+        user_login = User.query.filter_by(email=usr_email).first()
+
+        if not user_login.verified:
+            login_user(user_login)
+            return redirect(url_for('verification'))
+
+        if user_login.chrch_id:
+            login_user(user_login)
+            flash(f"Hey! {user_login.name.title()} You're Logged In!", "success")
+            if user_login.role == "gen_user":
+                user = gen_user.query.get(user_login.id)
+                if not user.gender or not user.contacts or not user.address:
+                        print(user.gender ,user.contacts, user.address)
+                        return redirect(url_for('usr_finish_signup'))
+            else:
+                user = admin_user.query.get(user_login.id)
+                if not user.gender or not user.contacts or not user.address:
+                    return redirect(url_for('admin_finish_signup'))
+            _activity(user_login)
+        else:
+            flash(f"Please Select Your Local Church", "success")
+            login_user(user_login)
+            return redirect(url_for('select_church'))
+
+        req_page = request.args.get('next')
+        return redirect(req_page) if req_page else redirect(url_for('home'))
+    
+
+    return redirect(url_for("home"))
 
 
 # Press the green button in the gutter to run the script.

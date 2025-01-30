@@ -8,66 +8,72 @@
 
     <title>{{title}}</title>
 
-    <div class="physical_addr">
-        <p>info@techxolutions.com</p>
-        <p>techxolutions.com</p>
+    <div class="header gen-flex">
+      <a href="/">
+        <div style="flex-direction: column;" class="logo gen-flex-col">
+            <img style="height: inherit;" src="{{ url_for('static', filename='images/logo.png') }}" />
+          <div class="cap-1">Eswatini Image Hub</div>
+        </div>
+      </a>
+      <div class="filler"></div>
+      <div class="flag">
+        <img style="height: inherit;" src="{{ url_for('static', filename='images/eswatini_flag.png') }}" />
+      </div>
     </div>
 
-    <div class="logo">
-      <img style="height: inherit;" src="{{ url_for('static', filename='images/logo.png') }}" />
+    <div id="search-cat" style="height: auto;" class="header gen-flex">
+      <!-- <div style="padding-left:20px" class="cap-1">Eswatini Image Hub</div> -->
+      {%if chck_len%}
+      <div id="filter-info" style="height: auto;" class="flag">
+        {%if images | length > 1%}
+        <div class="btns">Images</div>
+        {%elif images | length == 1%}
+        <div class="btns">{{images[0].image_category}}</div>
+        {%endif%}
+      </div>
+      {%endif%}
+      <div class="filler"></div>
+      <div class="search-cont">
+          <form style="gap:0;flex-wrap: nowrap;" class="general-flex" action="/search" method="get">
+            <input class="search-field" type="search" name="search_value" placeholder="Search Apps" value="">
+            <button style="background: none;" class="search-btn" type="submit"><img style="height:30px" src="static/icons/sibuko.png"></button>
+          </form>
+      </div>
+      <div style="background-color:" class="user">
+          <ul class="user-label gen-flex">
+          {% if current_user.is_authenticated %}
+            <li><a class="" href="/account"><span style="font-size:13px" class="nav-link">{{current_user.name}}</span></a></li>
+            <li><a href="/logout"><img class="logout-icon" style="height:40px" src="static/icons/logout-icon.webp"></a></li>
+          {% else %}
+            <li><a class="btns-outlined links-user" href="/login">Login</a></li>
+            <!-- <li><a class="btns-user links-user" href="/client_signup">Register</a></li> -->
+          {% endif %}
+          </ul>
+      </div>
+      
     </div>
 
-    <!-- <nav class="nav">
-        <ul>
-            <li class="links-li" ><a href="/">Home</a></li>
-            <li class="links-li" ><a href="/#services">Services</a></li>
-            <li class="links-li"><a href="/">About</a></li>
-            <li class="links-li"><a href="/#contact_us">Contact Us</a></li>
-        </ul>
-    </nav> -->
+    <div style="z-index:501"  onclick="sideNavFunc(event)" class="menu-icon">
+        <div class="stroke"></div>
+        <div class="stroke"></div>
+        <div class="stroke"></div>
+    </div>
 
-<!--    <button class="menu burger">Menu</button>-->
-    <div class="navigation">
-        <div style=""  onclick="sideNavFunc(event)" class="menu-icon">
-            <div class="stroke"></div>
-            <div class="stroke"></div>
-            <div class="stroke"></div>
-        </div>
+    <div onclick="closeSideNavFunc()"  id="side-navig-bg" class="side-nav-bg ">
+      <div id="side-navig-cont" class="side-nav-cont move-to-appear gen-flex-col">
+          <div style="padding-top:25px"  class="gen-flex-col cat-item-cont">
+            <a href="/?al='all'"> <div class="cat-item"><span>View All</span></div></a>
+            {%for category in categories%}
+            {% set num_images = images | selectattr('image_category', 'equalto', category) | list | length %}
+              
+                <a href="/?cat={{category}}"> <div class="cat-item"><span>{{category}}</span>{%if num_images > 0%}<small class="num gen-flex">{{num_images}}</small>{%endif%}</div></a>
+            {%endfor%}
+          </div>
+      </div>
+    </div>
 
-        <div class="other-nav">
-            <ul class="other-navbar-nav">
-              <li class="other-nav-item active">
-                <a class="nav-link" href="/">Home</a>
-              </li>
-              <div class="navbar-separator"></div>
-              <li class="other-nav-item">
-                <a class="nav-link" href="/#services">About</a>
-              </li>
-              <div class="navbar-separator"></div>
-              <li class="other-nav-item">
-                <a class="nav-link" href="/freelance_job_ads">Contact Us</a>
-              </li>
-              <div class="navbar-separator"></div>
-              <li class="other-nav-item">
-                <a class="nav-link" href="/about">Explore Apps</a>
-              </li>
-              <div class="navbar-separator"></div>
-              <li class="other-nav-item">
-                <a class="nav-link" href="/contact" >Engraving</a>
-              </li>
-            </ul>
-        </div>
+  
 
-        
-
-        <div style="background-color:;" class="user">
-            <div class="user-label">
-              <div><img style="" class="icon-imgs" src="{{ url_for('static', filename='icons/facebook-icon.png') }}" /></div>
-              <div><img style="" class="icon-imgs" src="{{ url_for('static', filename='icons/instagram-icon.png') }}" /></div>
-              <div><img style="" class="icon-imgs" src="{{ url_for('static', filename='icons/linkedin-icon.png') }}" /></div>
-            </div>
-        </div>
-  </div>
   <div onclick="closeSideNavFunc()"  id="side-navig-bg" class="side-nav-bg ">
     <div id="side-navig-cont" class="side-nav-cont move-to-appear">
         <!-- <div class="close-btn"><div class="stroke"></div></div> -->

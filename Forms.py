@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TextAreaField,BooleanField, SelectField,DateField, URLField,RadioField,IntegerField
+from wtforms import StringField,PasswordField,SubmitField, TextAreaField,BooleanField, SelectField,DateField, URLField,RadioField,IntegerField,TelField
 from wtforms.validators import DataRequired,Length,Email, EqualTo, ValidationError,Optional
 from flask_login import current_user
 from flask_wtf.file import FileField , FileAllowed
@@ -12,9 +12,15 @@ class Register(FlaskForm):
     email = StringField('email', validators=[DataRequired(),Email()])
     password = PasswordField('password', validators=[DataRequired(), Length(min=8, max=64)])
     confirm = PasswordField('confirm', validators=[DataRequired(),EqualTo('password'), Length(min=8, max=64)])
-    contacts = StringField('Contact(s)', validators=[Length(min=8, max=64)])
-    zip_code = StringField('Zip Code / Postal Code', validators=[Length(min=0, max=64)])
-    address = StringField('Physical Address', validators=[DataRequired(), Length(min=8, max=100)])
+    contacts = TelField('Contact(s)', validators=[Optional()])
+    gender =  RadioField('Gender',choices=[("Male", "Male"),("Female", "Female")], validators=[Optional()])
+    town = StringField('Your Town (Optional)', validators=[Optional()])
+    region = SelectField('Region (Optional)', validators=[Optional()],choices=[("Manzini", "Manzini"),("Hhohho", "Hhohho"),
+        ("Shiselweni", "Shiselweni"),("Lobombo", "Lobombo")])
+    address = StringField('Phy. Address (Optional)', validators=[Optional()])
+    
+    # zip_code = StringField('Zip Code / Postal Code', validators=[Length(min=0, max=64)])
+    # address = StringField('Physical Address', validators=[DataRequired(), Length(min=8, max=100)])
     image_pfl = FileField('Profile Image', validators=[FileAllowed(['jpg','png'])])
 
     submit = SubmitField('Create Account!')
@@ -29,12 +35,35 @@ class Register(FlaskForm):
 
 
 
+class ImagesForm(FlaskForm):
 
-class App_Info_Form(FlaskForm):
-
-    name = StringField('App Name*', validators=[DataRequired()])
-    description = TextAreaField('App Description*', validators=[DataRequired()])
-    app_category = SelectField('App Category*',choices=[
+    name = StringField('Image Name*', validators=[DataRequired()])
+    image = FileField('Upload Image*', validators=[DataRequired()], render_kw={"accept": "image/png,image/jpeg,image/gif,image/bmp"})
+    description = TextAreaField('Describe Image', validators=[Optional()])
+    image_category = SelectField('Category*',choices=[
+        ("Nature", "Nature"),
+        ("Mountains", "Mountains"),
+        ("Vegetation", "Vegetation"),
+        ("Sunsets", "Sunsets"),
+        ("Flowers", "Flowers"),
+        ("Seascapes", "Seascapes"),
+        ("Cities", "Cities"),
+        ("Abstract", "Abstract"),
+        ("Rivers", "Rivers"),
+        ("Wildlife", "Wildlife"),
+        ("Beaches", "Beaches"),
+        ("Forests", "Forests"),
+        ("Spring Water", "Spring Water"),
+        ("Deserts", "Deserts"),
+        ("Space", "Space"),
+        ("Landscapes", "Landscapes"),
+        ("Cultural", "Cultural"),
+        ("Underwater", "Underwater"),
+        ("People", "People"),
+        ("Community", "Community"),
+        ("Festival", "Festival"),
+        ("Road", "Road"),
+        ("Infrastructure", "Infrastructure"),
         ("Communications & Media", "Communications & Media"),
         ("Finance", "Finance"),
         ("Health", "Health"),
@@ -60,59 +89,21 @@ class App_Info_Form(FlaskForm):
         ("News", "News"),
         ("Music", "Music"),
         ("Shopping", "Shopping"),
-        ("Online Shopping", "Online Shopping"),
         ("Productivity", "Productivity"),
-        ("Social Media", "Social Media"),
         ("Utilities", "Utilities"),
         ("Games", "Games")
     ], validators=[DataRequired()])
-    app_category_ed = SelectField('App Category',choices=[
-        ("Communications & Media", "Communications & Media"),
-        ("Finance", "Finance"),
-        ("Health", "Health"),
-        ("Educational", "Educational"),
-        ("Entertainment", "Entertainment"),
-        ("Travel & Entertainment", "Travel & Entertainment"),
-        ("Lifestyle", "Lifestyle"),
-        ("Media", "Media"),
-        ("Techonology", "Techonology"),
-        ("Training & Skills", "Training & Skills"),
-        ("Faith", "Faith"),
-        ("Business", "Business"),
-        ("Weather", "Weather"),
-        ("Sports & Re-Creational", "Sports & Re-Creational"),
-        ("Betting & Casino", "Betting & Casino"),
-        ("News", "News"),
-        ("Music", "Music"),
-        ("Shopping", "Shopping"),
-        ("Online Shopping", "Online Shopping"),
-        ("Productivity", "Productivity"),
-        ("Social Media", "Social Media"),
-        ("Utilities", "Utilities"),
-        ("Games", "Games")
-    ], validators=[Optional()])
-    # platform = RadioField('Platform(s)*',choices=[('iOS','iOS'), ('Android','Android'), ('All','All')], validators=[DataRequired()])
-    # platform_ed = RadioField('Platform(s)',choices=[('iOS','iOS'), ('Android','Android'), ('All','All')], validators=[Optional()])
-    version_number = StringField('Version Number')
-    playstore_link = URLField("Playstore Download Link*")
-    ios_link = URLField("iOS Download Link")
-    uptodown_link = URLField("Uptodown Download Link")
-    huawei_link = URLField("Huawei Download Link")
-    apkpure_link = URLField("APKPure Download Link")
-    facebook_link = URLField("Company Facebook Link")
-    whatsapp_link = URLField("Company Whatsapp No.")
-    x_link = URLField("X Link (Twitter)")
-    linkedin_link = URLField("Company LinkedIn Link")
-    youtube_link = URLField("Company YouTube Link")
-    web_link=URLField("Company Web Link")
-    github_link = StringField('GitHub Link')
-    app_icon = FileField('App Icon*')
-    publish=BooleanField("Publish App",default=True)
-    company_name = StringField('Company Name*', validators=[DataRequired()])
-    company_contact = StringField('Contacts', validators=[Optional()])
-    company_email = StringField('Email*', validators=[DataRequired()])
-    edited_by=StringField('Edited by',validators=[DataRequired()])
+    publish=BooleanField("Publish Image",default=True)
     submit=SubmitField('submit')
+
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
+
+    def validate_image(self, image):
+        if image.data:
+            # Get the file extension
+            filename = image.data.filename
+            if not '.' in filename or filename.rsplit('.', 1)[1].lower() not in self.ALLOWED_EXTENSIONS:
+                raise ValidationError('File type is not allowed. Please upload a PNG, JPG, JPEG, GIF, or BMP file.')
 
 
 class SendEmailForm(FlaskForm):

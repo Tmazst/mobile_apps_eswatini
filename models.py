@@ -9,15 +9,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-#from app import login_manager
-
 metadata = MetaData()
 
 #Users class, The class table name 'h1t_users_cvs'
 class User(db.Model,UserMixin):
-
-
-    # __table_args__ = {'extend_existing': True}
 
     #Create db.Columns
     id = db.Column(db.Integer,primary_key=True)
@@ -27,8 +22,10 @@ class User(db.Model,UserMixin):
     password = db.Column(db.String(120), unique=True)
     confirm_password = db.Column(db.String(120), unique=True)
     verified = db.Column(db.Boolean, default=False)
+    contacts = db.Column(db.String(70))
     role = db.Column(db.String(120))
-    apps = relationship("App_Info",backref="User",lazy=True)
+    images = relationship("Images",backref="User",lazy=True)
+    # timestamp = db.Column(db.DateTime)
     # project_briefs = relationship("Project_Brief", backref="Project_Brief", lazy=True)
 
     __mapper_args__={
@@ -36,8 +33,19 @@ class User(db.Model,UserMixin):
         'polymorphic_on':role
     }
 
+class gen_user(User):
 
-class company_user(User):
+    id = db.Column(db.Integer, ForeignKey('user.id'), primary_key=True)
+    gender = db.Column(db.String(70))
+    address =  db.Column(db.String(70))
+    town =  db.Column(db.String(70))
+    region =  db.Column(db.String(70))
+
+    __mapper_args__={
+            "polymorphic_identity":'gen_user'
+        }
+
+class admin_user(User):
 
     id = db.Column(db.Integer, ForeignKey('user.id'), primary_key=True)
     contacts = db.Column(db.String(20))
@@ -47,39 +55,19 @@ class company_user(User):
     # hired_user = relationship("hired", backref='Hired Applicant', lazy=True)
 
     __mapper_args__={
-            "polymorphic_identity":'company_user'
+            "polymorphic_identity":'admin_user'
         }
 
 
-class App_Info(db.Model):
-
-    __tablename__ = "app_info"
-    #Note: Add new lines from the end and update search results route
+class Images(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
-    cid = db.Column(db.Integer,ForeignKey("user.id"))
-    name = db.Column(db.String(50), nullable=False)
+    uid = db.Column(db.Integer,ForeignKey("user.id"))
+    img_name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(255))
-    app_category = db.Column(db.String(255))
-    platform = db.Column(db.String(20), nullable=False,default="Android")
-    version_number = db.Column(db.String(20))
-    playstore_link = db.Column(db.String(100),nullable=False)
-    ios_link = db.Column(db.String(100))
-    uptodown_link = db.Column(db.String(100))
-    huawei_link = db.Column(db.String(100))#
-    apkpure_link = db.Column(db.String(100))
-    galaxy_link = db.Column(db.String(100))
-    microsoft_link = db.Column(db.String(100))
-    amazon_link = db.Column(db.String(100))
-    facebook_link = db.Column(db.String(100))
-    whatsapp_link = db.Column(db.String(100))
-    x_link = db.Column(db.String(100))
-    linkedin_link = db.Column(db.String(100))
-    youtube_link = db.Column(db.String(100))
-    web_link=db.Column(db.String(100))
-    github_link = db.Column(db.String(100))
-    app_icon = db.Column(db.String(100))
-    app_code = db.Column(db.Integer)
+    image_category = db.Column(db.String(255))
+    alias = db.Column(db.String(100))
+    image_thumbnail = db.Column(db.String(100))
     publish=db.Column(db.Boolean,default=True)
     approved=db.Column(db.Boolean)
     timestamp=db.Column(db.DateTime)
@@ -88,15 +76,16 @@ class App_Info(db.Model):
     company_email=db.Column(db.String(100))
     edited=db.Column(db.DateTime)
     edited_by=db.Column(db.String(100))
-    access=relationship("App_Access_Credits",backref="App_Info",lazy=True)
+    access=relationship("Image_Access_Credits",backref="App_Info",lazy=True)
 
+    
 
-class App_Access_Credits(db.Model):
+class Image_Access_Credits(db.Model):
 
-    __tablename__ = "app_access_credits"
+    __tablename__ = "image_access_credits"
 
     id = db.Column(db.Integer,primary_key=True)
-    app_id = db.Column(db.Integer,ForeignKey("app_info.id"),unique=True)
+    img_id = db.Column(db.Integer,ForeignKey("images.id"),unique=True)
     token = db.Column(db.String(255))
 
 
@@ -110,11 +99,12 @@ class stats_visitors(db.Model):
     browser=db.Column(db.String(255))
     timestamp=db.Column(db.DateTime)
 
-class stats_app_dlink(db.Model):
+
+class stats_image_dlink(db.Model):
 
     __tablename__ = "stats_app_dlink"
     id = db.Column(db.Integer,primary_key=True)
-    app_name=db.Column(db.String(255))
+    image_name=db.Column(db.String(255))
     download_link=db.Column(db.String(255))
     # visitor_act=db.Column(db.Integer,ForeignKey("stats_visitors.id"),unique=True)
     user_addr=db.Column(db.String(255))

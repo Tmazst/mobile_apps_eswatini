@@ -5,6 +5,9 @@
     .form-fields{
         display:flex;
         flex-direction:column;
+        a{
+            color:none
+        }
     }
     .search-cont{background-color:;display: flex;justify-content:center;padding:10px}
     .search-cont input{border: 1px solid grey;border-radius:10px;padding: 5px;}
@@ -29,172 +32,196 @@
     </section>
 </div>
  
-<div style="text-align: center;">
-    <span style="font-size:18px">Know Your Apps Campaign</span><br>
-    <span style="font-size:18px; font-weight: 300;">We Connect EmaSwatini To Their Apps</span>
-</div>
+<br>
 
-<br><br><br>
-<div style="justify-content: center;gap:5px;background:none;position:sticky;top:0px;"  class="general-flex">
-    <img id="list" class="view-opts-btn" style="height:55px !important;" src="static/icons/listview-icon.svg" />
-    <img id="blocks" class="view-opts-btn" style="height:55px" src="static/icons/blockview-icon.svg" />
-    <div class="search-cont">
-        <form style="gap:0" class="general-flex" action="/search" method="get">
-          <input class="search-field" type="search" name="search_value" placeholder="Search Apps" value="">
-          <button style="background: none;" class="search-btn" type="submit"><img style="height:30px" src="static/icons/sibuko.png"></button>
-        </form>
+<section class="container flat-flex">
+
+    <div style="align-items: flex-start !important;" class="category-nav gen-flex">
+        <div style="padding-top:25px"  class="gen-flex-col cat-item-cont">
+            <a href="/?al='all'"> <div class="cat-item"><span>View All</span></div></a>
+            {%for category in categories%}
+            {% set num_images = images | selectattr('image_category', 'equalto', category) | list | length %}
+                <a href="/?cat={{category}}"> <div class="cat-item"><span>{{category}}</span><small class="num gen-flex">{{num_images}}</small></div></a>
+            {%endfor%}
+        </div>
     </div>
-    <br>
-</div><br>
 
-<section style="flex-wrap: nowrap;background-color: " class="container">
-{% if layout == "blockview" or not layout %}
-    <!-- <div id="view-cont" style="width:; overflow: auto;background-color:;"> -->
-        <div class="scroll-container" style="background-color: rgb(255, 254, 254);">
-            {% for app in apps %}
-            {% if app.publish %}
-            <div class="app-container">
-                <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
-                <div class="app-name">{{app.name.strip() | truncate(length=20, end='...')}}</div>
-                {% if app.web_link %}
-                    <a href="{{app.web_link}}" target="_blank"><div class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name | truncate(length=25, end='...')}}</span></div></a>
-                {% else %}
-                    <div class="owner-name"><span>{{app.company_name | truncate(length=28, end='...')}}</span></div>
-                {% endif %}
-                <div class="description">{{app.description|truncate(length=150, end='.....') }}</div>
-                <!-- <img class="icon-imgs" src="static/icons/download-icon.png" /> -->
-                <div class="labels">Download</div>
-                <div style="height:;" class="links general-flex">
-                    <a style="height:inherit"  href="{{app.playstore_link}}" target="_blank" onclick="trackClick('{{ app.playstore_link }}','{{app.name}}')">
-                        <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
-                    </a> 
-                </div>
-                <div id="other-pltfms-{{app.id}}" style="height:;" class="general-flex-icons">
-                    {% if app.ios_link %}
-                    <a style="height:inherit"  href="{{app.ios_link}}" target="_blank" onclick="trackClick('{{ app.ios_link }}','{{app.name}}')">
-                        <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
-                    </a> 
-                    {% endif %}
-                    <div style="background-color:;" class="general-flex">
-                        {% if app.uptodown_link %}
-                        <a style="" href="{{app.uptodown_link}}" target="_blank">
-                            <img style="height:;" class="icon-imgs" src="static/icons/UpToDown.png" />
-                        </a> 
-                        {% endif %}
-                        {% if app.huawei_link %}
-                        <a style="" href="{{app.huawei_link}}" target="_blank">
-                            <img style="height:;" class="icon-imgs" src="static/icons/huawei-icon.png" />
-                        </a>
-                        {% endif %}
-                        {% if app.apkpure_link %}
-                        <a style="" href="{{app.apkpure_link}}" target="_blank">
-                            <img style="height:;" class="icon-imgs" src="static/icons/apkpure-icon.png" />
-                        </a>
-                        {% endif %}
+    <div class="parent-img-cont">
+
+        <div style="flex-wrap: wrap;" class="images-container flat-flex">
+            {%for img in images%}
+            {% set by_who = usr_obj.query.get(img.uid).name %}
+            <div class="img-card">
+                {%set descr = img.description | tojson %}
+                <div id="imag-cont-{{img.id}}" onclick="displayImage('{{img.image_thumbnail}}','{{img.img_name | e}}','{{by_who}}','{{img.id}}', '{{descr | remove_special_chars}}')"  class="imag"><img id="image-{{img.id}}" class="img-thmb"  src="static/uploads/usr_images/{{img.image_thumbnail}}" /></div>
+                <!-- <div style="gap:5px" class="icons gen-flex"> -->
+                    
+                    <!-- <div class="svg-hrefs" >
+                        <object class="svg-icons" type="image/svg+xml" data="static/icons/view-icon.svg"></object>
                     </div>
-                </div><br><div style="flex-grow:1"></div>
-                {% if not app.uptodown_link or not app.huawei_link or not app.apkpure_link  %}
-                <div onclick="revealIcons('{{app.id}}')" id="reveal-icons-btns-{{app.id}}" class="btns">+more</div>
-                {%else%}
-                <a href='{{app.playstore_link}}' target="_blank"><div class="btns">explore</div></a>
-                {%endif%}
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div> 
-    <!-- </div> -->
 
+                    <a class="svg-hrefs" style="" href="%">
+                        <object class="svg-icons" type="image/svg+xml" data="static/icons/download-icon.svg"></object>
+                    </a>
 
-{% elif layout == "listview"  %}
-        <!-----DEMOs---->
-        <div id="" style="display: flex;flex-direction: column;background-color: ;margin:10px auto;gap:10px" class="list-view" >
-        {% for category in categories %}
-        <h3 style="" class="cat-subtitle">{{category}}</h3>
-        {% for app in apps %}
-            {%if app.app_category == category and app.publish %}
-        
-            <div style="background-color: #f7f7f7;border-radius: 15px;padding-right:;" class="app-list">
-                <div onclick="popAppItem('{{app.id}}')" style="height:65px;width:65px;min-width:65px;overflow: hidden;border-radius: 10px;border: 1px solid rgb(235, 232, 232);">
-                    <img style="height:inherit;border-radius:10px" src="static/images/{{app.app_icon}}" /></div>
-                <div onclick="popAppItem('{{app.id}}')" style="min-width: 150px;"  class="item-as-btn c-name">
-                    <span   style="text-wrap: nowrap;color:#00a550">{{app.name|truncate(length=22, end='...')}}</span>
-                    <div id='app-description' class="description" style="font-weight: 400;text-align: left;" >
-                        {{app.description|truncate(length=48, end='...more') }}
-                    </div> 
-                </div>
-                <div style="background-color:;height: 1px;flex-grow:1;width:80px" class=""></div>
-                <div class="reactions-container">
-                    <div class="pre-react">
-                        {% if app.web_link %}
-                            <a class="" style="height:" href="{{app.web_link}}" target="_blank"><img class="icon-links" src="static/icons/globe.png" /></a>
-                        {% endif %}
-                        {% if app.facebook %}
-                            <a class="" style="" href="#"><img class="icon-links" src="static/icons/facebook-icon.png" /></a>
-                        {% endif %}
-                    </div>
+                    <a class="svg-hrefs" style="" href="$">
+                        <object class="svg-icons" type="image/svg+xml" data="static/icons/share-icon.svg"></object>
+                    </a> -->
+
+                <!-- </div> -->
+                <div class="cap-2 gen-flex-col">
+                    <!-- <a href="" class="svg-hrefs" id="img-href-id" style="width:40px"> -->
+                        <div id="downld-btn-mobl-{{img.id}}" onclick="openDownload('{{img.id}}')" class="btns-inverted downld-btn-mobl">
+                            Download
+                        </div>
+                    <!-- </a> -->
+                    <small class="captions">{{img.img_name}}</small>
+                    <small class="captions">by: {{by_who}}</small>
                 </div>
                 
-
             </div>
+            {%endfor%}
 
-           <!-- Popup  -->
-           <div onclick="closeAppPop('{{app.id}}')" id="pop_appcont_{{app.id}}" class="pop-cont">
-            <div style="height:auto;width:auto;top:100px;background: none;padding:0;" id="popup_app_{{app.id}}" class="pop-up">
-                <div style="background-color: rgb(196, 195, 195);"  class="app-container">
-                    <div class="icon-cont"><img src="static/images/{{app.app_icon}}"/></div>
-                    <div style="white-space: wrap;" class="app-name">{{app.name}}</div>
-                    {% if app.web_link %}
-                        <a href="{{app.web_link}}" target="_blank"><div style="white-space: wrap;" class="owner-name"><img class="icon-imgs" src="static/icons/globe.png" /><span>{{app.company_name}}</span></div></a>
-                    {% else %}
-                        <div class="owner-name"><span>{{app.company_name}}</span></div>
-                    {% endif %}
-                    <div style="color:rgb(44, 44, 44)" class="description">{{app.description}}</div>
-
-                    <div class="labels">Download</div>
-                <div style="height:;" class="links general-flex">
-                    <a style="height:inherit"  href="{{app.playstore_link}} " target="_blank" onclick="trackClick('{{ app.playstore_link }}','{{app.name}}')">
-                        <img class="icon-imgs" src="static/icons/googlePlayBadge.svg" />
-                    </a> 
-                    {% if app.ios_link %}
-                    <a style="height:inherit"  href="{{app.ios_link}}" onclick="trackClick('{{ app.ios_link }}','{{app.name}}')">
-                        <img class="icon-imgs" src="static/icons/appleAppStoreBadge.svg" />
-                    </a> 
-                    {% endif %}
-                    <div style="background-color:;" class="general-flex">
-                        {% if app.uptodown_link %}
-                        <a style="" href="{{app.uptodown_link}}">
-                            <img style="height:;" class="icon-imgs" src="static/icons/UpToDown.png" />
-                        </a> 
-                        {% endif %}
-                        {% if app.huawei_link %}
-                        <a style="" href="{{app.huawei_link}}">
-                            <img style="height:;" class="icon-imgs" src="static/icons/huawei-icon.png" />
-                        </a>
-                        {% endif %}
-                        {% if app.apkpure_link %}
-                        <a style="" href="{{app.apkpure_link}}">
-                            <img style="height:;" class="icon-imgs" src="static/icons/apkpure-icon.png" />
-                        </a>
-                        {% endif %}
-                    </div>
-                </div><br>
-                <a style="height:inherit"  href="{{app.playstore_link}}">
-                    <div class="btns">explore</div></a>
-                </div>
-            </div>
         </div>
-            {% endif %}
-        {% endfor %}
-        {% endfor %}
+
+        <br>
+
+        <div style="justify-content: flex-start;gap:5px" class="nd-child gen-flex">
+            <a href="/image_form" ><div  class="btns">Upload</div></a>
+            {%if not current_user %}
+            <a href="/signup" ><div class="btns">Sign Up</div></a>
+            {%endif%}
+        </div><br>
+        <div style="align-items:flex-start;" class="nd-child gen-flex-col">
+            <div  class="t-info-t">Documenting Eswatini Scenario into Images</div>
+            <div  class="t-info">Powered by <span>EmaSwati</span></div>
+            <div class="t-info">Developed by <span>Tech Xolutions (TechX)</span></div>
+        </div>
     </div>
-        <!-- Popup for more info -->
-{% endif %}
+
+    <div class="display-img">
+        <div style="position: fixed;" class="side-display-fixed">
+            <div class="allow-scroll">
+
+                <div style="width:max-content;margin:0px auto;" class="show-img-dv">
+                    <img id="show-img" class="displayed-img" src="" />
+                </div>
+
+                <div style="" class="cap-parent gen-flex">
+                    <h4 class="img-name">Name of the Image Here</h4>
+                    <div class="filler"></div>
+                    <div class="download_icon">
+                        <a href="" class="svg-hrefs" id="img-href-id" style="width:40px">
+                            <img class="svg-icons"  style="height:40px" src="static/icons/download-icon.svg" />
+                        </a>
+                    </div>
+                </div> 
+
+                <small class="by"></small>
+
+                <div class="describe-img"></div>
+
+            </div>
+        </div>     
+    </div>
 
 </section><br><br>
 
 
 <script>
     // quoteBtns.forEach(function(btn){
+        function displayImage(image,imgname,by_who,img_id,describe) {
+
+            if(window.innerWidth < 575){
+                var allImgsCont = document.querySelectorAll(".imag");
+                var allImgs = document.querySelectorAll(".img-thmb");
+                var allBtns = document.querySelectorAll(".downld-btn-mobl");
+                console.log("We are on Small Screens: ",window.innerWidth);
+                var imgCont = document.querySelector("#imag-cont-" +img_id);
+                var img = document.querySelector("#image-" +img_id);
+                var downldBtnMobl = document.querySelector("#downld-btn-mobl-" +img_id);
+                
+                allImgsCont.forEach(imgcont => {
+                    imgcont.style.height = "170px";
+                    console.log("Reset all");
+                    });
+
+                allImgs.forEach((img,index) => {
+                    img.classList.remove("resize-up"); 
+                    console.log("Reset all Images ");
+                    // document.querySelector("#downld-btn-mobl-" +index).style.display = "none";
+                    });
+
+                allBtns.forEach((btn,index) => {
+                    console.log("Reset all Buttons ");
+                    btn.style.display = "none";
+                    });
+
+                imgCont.style.width = window.innerWidth;
+                imgCont.style.height = "auto";
+                img.classList.add("resize-up"); 
+                downldBtnMobl.style.display = 'block';
+
+            }else if(window.innerWidth > 575 && window.innerWidth < 800){
+                var allImg = document.querySelectorAll(".imag");
+                console.log("We are on Tablet Screens: ",window.innerWidth);
+                var imgCont = document.querySelector("#imag-cont-" +img_id);
+                var img = document.querySelector("#image-" +img_id);
+
+                allImg.forEach(img => {
+                    img.style.height = "170px";
+                });
+
+                allImgs.forEach(img => {
+                    img.classList.remove("resize-up-2"); 
+                    console.log("Reset all Images ");
+                    });
+
+                // script goes here 
+                imgCont.style.width = window.innerWidth;
+                imgCont.style.height = "auto";
+                img.classList.toggle("resize-up-2");
+                
+            }else{
+
+                console.log(image);
+                let mainImg = document.querySelector("#show-img");
+                let nameImg = document.querySelector(".img-name");
+                let describeImg = document.querySelector(".describe-img");
+                let displyCont = document.querySelector(".display-img");
+                let locate = document.querySelector("#img-href-id");
+                let by = document.querySelector(".by");
+
+                let imageUrl = "static/uploads/usr_images/thumbnails/" + image + "?t=" + new Date().getTime();
+                
+                displyCont.classList.add("showIt");
+
+                mainImg.src = imageUrl;
+
+                nameImg.innerHTML = imgname;
+                by.innerHTML = "by " + by_who;
+
+                describeImg.innerHTML = describe;
+
+                locate.href = "/download_img?img_id=" + img_id.toString();
+
+                console.log("Name: ", nameImg.innerHTML);
+                console.log("Image: ", mainImg.src);
+                console.log("Id: ", locate.href);
+                console.log("Description: ", describe);
+
+                mainImg.onerror = function() {
+                    console.error("Image failed to load:", imageUrl);
+                    // Optionally, set a fallback image
+                    mainImg.src = "path/to/fallback-image.jpg";
+                };
+
+        }
+    }
+
+    function openDownload(img_id){
+        window.location.href = "/download_img?img_id=" + img_id;
+    }
 
     function revealIcons(id){
         
